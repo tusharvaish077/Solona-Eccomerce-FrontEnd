@@ -15,17 +15,19 @@ const Navbar = () => {
             border-b'>
                 <div className='flex items-center gap-9'>
                     <div className='flex item-center gap-2'>
-                    {false && <IconButton>
+                    {!isLarge && <IconButton>
                         <MenuIcon/>
                     </IconButton>}
-                    <h1 className="logo cursor-pointer text-lg md:text-xl  text-primary-color">Solona Ecommerce</h1>
+                    <h1 className="logo cursor-pointer text-lg md:text-xl lg:text-[1.4rem] text-primary-color">Solona Ecommerce</h1>
                     </div>
 
                     <ul className='flex items-center font-medium text-gray-800 gap-1'>
                         {["Men","Women","Home & Furniture","Electronics"].map(
                             (items)=><li className='mainCategory cursor-pointer hover:text-primary-color
-                            hover:border-b-2 h-7 px-4 py-4 border-primary-color flex items-center'>
-                                <span className='pb-2 pt-2' >{items}</span></li>)}
+      hover:border-b-2 border-primary-color pb-8 pt-8
+      h-7 px-2 py-2 text-xs sm:text-sm md:text-sm lg:text-base
+      flex items-center'>
+                               {items}</li>)}
                     </ul>
                 </div>
                     <div className='flex gap-1 lg:gap-6 items-center'>
