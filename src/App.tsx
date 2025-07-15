@@ -5,7 +5,7 @@ import theme from './Theme/theme';
 import './App.css';
 import Navbar from './customer/components/Navbar/Navbar';
 import Home from './customer/pages/Home/Home';
-import ShopByCategory from './customer/pages/ShopByCategory/ShopByCategory';
+
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
   <div className="">
      <Navbar/>
      <Home/>
-     <ShopByCategory/>
+     
    </div>
    {/* end these block are wrapped in custom theme teal */}
 </ThemeProvider>
