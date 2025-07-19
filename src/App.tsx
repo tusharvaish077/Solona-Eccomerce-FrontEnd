@@ -5,6 +5,8 @@ import theme from './Theme/theme';
 import './App.css';
 import Navbar from './customer/components/Navbar/Navbar';
 import Home from './customer/pages/Home/Home';
+import Product from './customer/pages/Product/Product';
+import ProductDetails from './customer/pages/ProductDetails/ProductDetails';
 
 
 function App() {
@@ -15,10 +17,11 @@ function App() {
   {/* start */}
   <div className="">
      <Navbar/>
-     <Home/>
-     
+     {/* <Home/> */}
+     {/* <Product/> */}
+      <ProductDetails/>
    </div>
-   {/* end these block are wrapped in custom theme teal */}
+   
 </ThemeProvider>
    
   );

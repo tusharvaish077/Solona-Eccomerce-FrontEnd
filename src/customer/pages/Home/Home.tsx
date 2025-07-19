@@ -1,7 +1,7 @@
 import React from 'react'
 import ElectricCategory from './ElectricCategory/ElectricCategory'
 import CategoryGrid from './CategoryGrid/CategoryGrid'
-import ShopByCategory from '../ShopByCategory/ShopByCategory'
+import ShopByCategory from './ShopByCategory/ShopByCategory'
 import screenshot from '../../../Assets/spring-beauty-young-beautiful-stylish-female-model-posing-against-pink-background-cross-arms-chest-smiling-happy.jpg';
 
 import Deal from './Deal/Deal'
