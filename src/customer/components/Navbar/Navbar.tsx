@@ -23,7 +23,7 @@ const Navbar = () => {
                     <h1 className="logo cursor-pointer text-lg md:text-xl lg:text-[1.4rem] text-primary-color">Solona Ecommerce</h1>
                     </div>
 
-                    <ul className='flex items-center font-medium text-gray-800 gap-1'>
+                    <ul className='flex items-center font-medium text-gray-800'>
                         {mainCategory.map(
                             (items)=><li 
                             onMouseLeave={()=>setShowCategorySheet(false)}
