@@ -5,6 +5,7 @@ import { teal } from '@mui/material/colors';
 import { Button, Divider } from '@mui/material';
 import { AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet, WorkspacePremium } from '@mui/icons-material';
 import SimilarProducts from './SimilarProducts';
+import ReviewCard from '../Review/ReviewCard';
 
 const PageDetails = () => {
 
@@ -87,7 +88,7 @@ const PageDetails = () => {
 
                 <div className="flex items-center gap-2 w-[140px] justify-between">
                   
-                  <Button disabled={quantity==1} onClick={()=>setQuantity(quantity-1)}>
+                  <Button disabled={quantity===1} onClick={()=>setQuantity(quantity-1)}>
                     <Remove/>
                   </Button>
 
@@ -121,13 +122,17 @@ const PageDetails = () => {
               <div className='mt-5 text-sm'>
                 <p>The saree comes with embroidered Banarasi Pattern enriching the pious culutre of Varanasi. The blouse comes as unstiched piece the images shown are illustaration of afterwork in blouse piece.</p>
               </div>
-
+              
+              <div className='mt-12 space-y-5'>
+                <ReviewCard/>
+                <Divider/>
+              </div>
 
             </section>
          </div>
         
         <div className="mt-20">
-          <h1 className='text-lg font-bold'>Similar Product</h1>
+          <h1 className='text-lg font-bold px-4'>Similar Product</h1>
           <div className='pt-5'>
             <SimilarProducts/>
           </div>
