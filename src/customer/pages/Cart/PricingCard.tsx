@@ -30,7 +30,7 @@ const PricingCard = () => {
     
       <Divider/>
     <div className='p-5'>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center text-primary-color">
         <span>Total</span>
         <span>₹2997</span>
       </div>
