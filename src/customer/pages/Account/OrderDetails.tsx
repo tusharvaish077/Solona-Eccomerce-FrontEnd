@@ -2,6 +2,7 @@ import { Box, Button, Divider } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import OrderStepper from './OrderStepper';
+import { Payments } from '@mui/icons-material';
 
 const OrderDetails = () => {
     const navigate = useNavigate();
@@ -47,6 +48,23 @@ const OrderDetails = () => {
                     <p>You saved<span className="text-green-500 font-medium text-xs">₹{800}.00</span> on this item</p>
                 </div>
                 <p className="font-medium">₹{78}.00</p>
+            </div>
+
+            <div className="px-5">
+                <div className="bg-teal-50 px-5 py-2 text-xs font-medium flex items-center gap-3">
+                    <Payments/>
+                    <p>Pay On Delivery</p>
+                    
+                </div>
+            </div>
+            <Divider/>
+            <div className="px-5 pb-5">
+                <p className="text-xs"><strong>Sold by : </strong>Trade Hull Enterprise</p>
+            </div>
+            <div className="p-10">
+                <Button disabled={false} color='error' sx={{py:"0.7rem"}} className='' variant='outlined' fullWidth>
+                    {true? "order canceled":"Cancel Order"}
+                </Button>
             </div>
         </div>
         </Box> 

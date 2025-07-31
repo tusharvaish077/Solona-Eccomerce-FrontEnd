@@ -5,8 +5,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 import CategorySheet from './CategorySheet';
 import { mainCategory } from '../../../data/category/mainCategory';
+import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
     const theme = useTheme();
+    const navigate =useNavigate();
     const [selectedCategory, setSelectedCategory] = useState("men");
     const [showCategorySheet, setShowCategorySheet] = useState(false);
     const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
@@ -20,7 +22,7 @@ const Navbar = () => {
                     {!isLarge && <IconButton>
                         <MenuIcon/>
                     </IconButton>}
-                    <h1 className="logo cursor-pointer text-lg md:text-xl lg:text-[1.4rem] text-primary-color">Solona Ecommerce</h1>
+                    <h1 onClick={()=>navigate("/")} className="logo cursor-pointer text-lg md:text-xl lg:text-[1.4rem] text-primary-color">Solona Ecommerce</h1>
                     </div>
 
                     <ul className='flex items-center font-medium text-gray-800'>
@@ -43,7 +45,7 @@ const Navbar = () => {
                             <SearchIcon/>
                         </IconButton>
                         {
-                            true?<Button className='flex items-center gap-2'>
+                            true?<Button onClick={()=>{return navigate("/account/orders")}} className='flex items-center gap-2'>
                                 <Avatar
                                 sx={{width:29, height:29 }}
                                  src="/Icons/Screenshot 2025-07-09 211247.png"
@@ -58,7 +60,7 @@ const Navbar = () => {
                         <IconButton>
                            <AddShoppingCart className='text-gray-700' sx={{ fontSize: 29 }} />
                         </IconButton>
-                        { isLarge && <Button variant='outlined'>
+                        { isLarge && <Button onClick={()=>navigate("/become-seller")} variant='outlined'>
                             Become Seller
                         </Button>}
                     </div>
