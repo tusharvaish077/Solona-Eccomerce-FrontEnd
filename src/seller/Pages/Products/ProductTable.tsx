@@ -6,6 +6,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useDispatch } from 'react-redux';
+import { fetchSellerProducts } from '../../../State/seller/sellerProductSlice';
+import { AppDispatch, useAppSelector } from '../../../State/Store';
+import { Product } from '../../../types/ProuductTypes';
+import { Button, IconButton } from '@mui/material';
+import { Edit } from '@mui/icons-material';
 
 function createData(
   name: string,
@@ -26,6 +32,15 @@ const rows = [
 ];
 
 export default function ProductTable() {
+  const dispatch = useDispatch<AppDispatch>();
+  const {sellerProduct} = useAppSelector(store=>store);
+  React.useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      dispatch(fetchSellerProducts(token));
+    }
+  }, []);
+  // console.log("Redux sellerProduct:", sellerProduct);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -41,22 +56,36 @@ export default function ProductTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {sellerProduct.products.map((item:Product) => { console.log("Rendering product:", item); return(
+            
             <TableRow
-              key={row.name}
+              key={item.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                <div className='flex gap-1 flex-wrap'>
+                  {item?.images?.map((image, idx) => (
+                    <img className='w-20 rounded-md' key={idx} src={image} alt=""/>
+                  ))}
+                </div>
               </TableCell>
-              <TableCell >{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell >{item.title }</TableCell>
+              <TableCell align="right">{item.mrpPrice}</TableCell>
+              <TableCell align="right">{item.sellingPrice}</TableCell>
+              <TableCell align="right">{item.color}</TableCell>
+              <TableCell align="right">
+                <Button size='small'>
+                  in_stock
+                </Button>
+              </TableCell>
+              <TableCell align="right">
+                <IconButton color ='primary' size='small'>
+                  <Edit/>
+                </IconButton>
+              </TableCell>
             </TableRow>
-          ))}
+          )}
+        )}
         </TableBody>
       </Table>
     </TableContainer>

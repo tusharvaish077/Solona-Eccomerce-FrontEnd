@@ -14,6 +14,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { colors } from '../../../data/Filter/colors'
 import { sizes } from '../../../data/Filter/sizes'
 import { mainCategory } from '../../../data/category/mainCategory'
+import { useAppDispatch } from '../../../State/Store'
+import { createProduct } from '../../../State/seller/sellerProductSlice'
 
 const categoryTwo: {[key:string]:any[]} = {
     men:menLevelTwo,
@@ -36,6 +38,8 @@ const categoryThree: {[key:string]: any[]}={
 const AddProduct = () => {
     const [uploadImage, setUploadImage] = useState(false);
     const [snackbarOpen, setsnackbarOpen] = useState(false);
+
+    const dispatch = useAppDispatch();
     const formik = useFormik({
     initialValues:{
         title:"",
@@ -50,8 +54,9 @@ const AddProduct = () => {
         category3:"",
         sizes:""
     },
-    onSubmit:()=>{
-
+    onSubmit:(values)=>{
+        console.log(values);
+        dispatch(createProduct({request:values,jwt:localStorage.getItem("jwt")}));
     }
 });
     
@@ -79,7 +84,7 @@ const AddProduct = () => {
 
   return (
     <div>
-        <form onSubmit={formik.handleSubmit} className='space-y-4 p-4'/>
+        <form onSubmit={formik.handleSubmit} className='space-y-4 p-4'>
         <Grid container spacing={2}>
             <Grid className='flex flex-wrap gap-5' size={{xs:12}}>
                 <input 
@@ -155,17 +160,17 @@ const AddProduct = () => {
                 />
             </Grid>
             <Grid size={{xs:12, md:4, lg:3}}>
-                <TextField fullWidth
-                    
-                    id='mrp_price'
-                    name='mrp_price'
-                    label='MRP Price'
-                    type='number'
-                    value={formik.values.mrpPrice}
-                    onChange={formik.handleChange}
-                    error={formik.touched.mrpPrice && Boolean(formik.errors.mrpPrice)}
-                    helperText={formik.touched.mrpPrice && formik.errors.mrpPrice}
-                    required
+                <TextField
+                fullWidth
+                id='mrpPrice'
+                name='mrpPrice'
+                label='MRP Price'
+                type='number'
+                value={formik.values.mrpPrice}
+                onChange={formik.handleChange}
+                error={formik.touched.mrpPrice && Boolean(formik.errors.mrpPrice)}
+                helperText={formik.touched.mrpPrice && formik.errors.mrpPrice}
+                required
                 />
             </Grid>
             <Grid size={{xs:12, md:4, lg:3}}>
@@ -309,6 +314,7 @@ const AddProduct = () => {
             </Grid>
             
         </Grid>
+        </form>
     </div>
   )
 }

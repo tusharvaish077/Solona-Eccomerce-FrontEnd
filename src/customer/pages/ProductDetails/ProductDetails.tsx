@@ -6,10 +6,12 @@ import { Button, Divider } from '@mui/material';
 import { AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet, WorkspacePremium } from '@mui/icons-material';
 import SimilarProducts from './SimilarProducts';
 import ReviewCard from '../Review/ReviewCard';
+import { useAppDispatch } from '../../../State/Store';
 
 const PageDetails = () => {
 
   const [quantity, setQuantity] = useState(1);
+  const dispatch= useAppDispatch();
   return (
     <div className='px-5 lg:px-20 pt-10'>
          <div className='grid grid-col-1 lg:grid-cols-2 gap-10'>

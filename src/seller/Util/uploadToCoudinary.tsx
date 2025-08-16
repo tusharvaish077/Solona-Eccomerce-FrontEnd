@@ -1,6 +1,6 @@
 export const uploadToCloudinary = async(pics:any)=>{
     const cloud_name="ddtvoqj4n";
-    const upload_preset ="ml_default"
+    const upload_preset ="solona_ecom"
 
     if(pics){
         const data = new FormData();
@@ -8,12 +8,13 @@ export const uploadToCloudinary = async(pics:any)=>{
         data.append("upload_preset", upload_preset);
         data.append("cloud_name", cloud_name);
 
-        const res= await fetch("https://api.cloudinary.com/v1_1/ddtvoqj4n/upload",{
+        const res= await fetch("https://api.cloudinary.com/v1_1/ddtvoqj4n/image/upload",{
             method:"POST",
             body:data
         })
 
         const fileData = await res.json();
+        console.log(fileData);
         return fileData.url;
     }
     else{
