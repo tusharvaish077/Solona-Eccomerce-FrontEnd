@@ -2,26 +2,37 @@ import { Close, Remove } from '@mui/icons-material';
 import { Button, Divider, IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
+import { CartItem } from '../../../types/cartType';
+import { useAppDispatch } from '../../../State/Store';
+import { updateCartItem } from '../../../State/customer/cartSlice';
 
-const CartItem = () => {
-  const [quantity, setQuantity] = useState(1);
-  const handleUpdateQuantity =()=>{
+const CartItemCard = ({item}:{item:CartItem}) => {
 
+  
+  const dispatch = useAppDispatch();
+
+  const handleUpdateQuantity =(value:number)=>()=>{
+    dispatch(updateCartItem({jwt:localStorage.getItem("jwt"),
+      cartItemId:item.id,
+      cartItem:{quantity:item.quantity+value}
+    }))
   }
+
+
   return (
     <div className='border rounded-md relative'>
         <div className="p-5 flex gap-3">
             <div>
                 <img  className='w-[90px] rounded-md '
-                src="https://m.media-amazon.com/images/I/514jUYwSHzL._SX679_.jpg" alt="" />
+                src={item.product.images[0]} alt="" />
             </div>
 
             <div className="space-y-2">
-              <h1 className='font-semibold text-lg'>Monte Carlo Clothing</h1>
-              <p className='text-gray-600 font-medium text-sm'>Jet Black Denim Shirt </p>
+              <h1 className='font-semibold text-lg'>{item.product.seller?.businessDetails.businessName}</h1>
+              <p className='text-gray-600 font-medium text-sm'>{item.product.title}</p>
               <p className='text-gray-400 text-xs'><strong>Sold by: Saldon Textiles Private Limited</strong></p>
               <p className='text-sm'>7 days replacement available</p>
-              <p className='text-sm text-gray-500'><strong>quantity:</strong>5</p>
+              <p className='text-sm text-gray-500'><strong>quantity:</strong>{item.quantity}</p>
 
             </div>
             
@@ -32,13 +43,13 @@ const CartItem = () => {
               <div className="flex items-center gap-2 w-[140px] justify-between">
                 
                   
-                  <Button disabled={quantity===1} onClick={()=>setQuantity(quantity-1)}>
+                  <Button disabled={item.quantity===1} onClick={handleUpdateQuantity(-1)}>
                     <Remove/>
                   </Button>
 
-                  <span>{quantity}</span>
+                  <span>{item.quantity}</span>
                   
-                   <Button onClick={()=>setQuantity(quantity+1)}>
+                   <Button onClick={handleUpdateQuantity(+1)}>
                     <AddIcon/>
                   </Button>
 
@@ -46,7 +57,7 @@ const CartItem = () => {
               </div>
             </div>
             <div className='pr-5'>
-              <p className='text-gray-700 font-medium'>₹799</p>
+              <p className='text-gray-700 font-medium'>₹{item.sellingPrice}</p>
             </div>
           </div>
           <div className="absolute top-1 right-1">
@@ -58,4 +69,4 @@ const CartItem = () => {
   )
 }
 
-export default CartItem
+export default CartItemCard

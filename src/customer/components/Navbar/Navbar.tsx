@@ -6,12 +6,14 @@ import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 import CategorySheet from './CategorySheet';
 import { mainCategory } from '../../../data/category/mainCategory';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../State/Store';
 const Navbar = () => {
     const theme = useTheme();
     const navigate =useNavigate();
     const [selectedCategory, setSelectedCategory] = useState("men");
     const [showCategorySheet, setShowCategorySheet] = useState(false);
     const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
+    const {auth} = useAppSelector(store=>store);
   return (
     <>
         <Box className="sticky top-0 left-0 right-0 bg-white" sx={{zIndex:2}}>
@@ -45,14 +47,14 @@ const Navbar = () => {
                             <SearchIcon/>
                         </IconButton>
                         {
-                            true?<Button onClick={()=>{return navigate("/account/orders")}} className='flex items-center gap-2'>
+                            auth.isLoggedIn?<Button onClick={()=>{return navigate("/account/orders")}} className='flex items-center gap-2'>
                                 <Avatar
                                 sx={{width:29, height:29 }}
                                  src="/Icons/Screenshot 2025-07-09 211247.png"
                                  />
-                                <h1 className='font-semibold hidden lg:block'>Tushar</h1>
+                                <h1 className='font-semibold hidden lg:block'>{auth.user?.fullName}</h1>
                                 </Button>:
-                            <Button variant='contained'>Login</Button>
+                            <Button onClick={()=>navigate("/login")} variant='contained'>Login</Button>
                         }
                         <IconButton>
                            <FavoriteBorder sx={{ fontSize: 29 }} />

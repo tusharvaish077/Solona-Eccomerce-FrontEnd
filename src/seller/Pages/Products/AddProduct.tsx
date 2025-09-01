@@ -9,7 +9,7 @@ import { electronicsLevelThree } from '../../../data/category/level three/electr
 import { useFormik } from 'formik'
 import { Button, CircularProgress, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { AddPhotoAlternate } from '@mui/icons-material'
-import { uploadToCloudinary } from '../../Util/uploadToCoudinary'
+import { uploadToCloudinary } from '../../../Util/uploadToCoudinary'
 import CloseIcon from '@mui/icons-material/Close';
 import { colors } from '../../../data/Filter/colors'
 import { sizes } from '../../../data/Filter/sizes'

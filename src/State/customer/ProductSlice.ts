@@ -2,14 +2,15 @@ import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/too
 import { api } from "../../config/Api";
 import { Product } from "../../types/ProuductTypes";
 
-const API_URL ="http://localhost:5454"; 
-export const fetchProductById = createAsyncThunk("products/fetchProductById",
+const API_URL ="/products"; 
+
+export const fetchProductById = createAsyncThunk<Product, number>("products/fetchProductById",
     async(productId,{rejectWithValue})=>{
         try {
             const response = await api.get(`${API_URL}/${productId}`)
             
             const data = await response.data;
-            console.log("data : "+data);
+            console.log("Product details data : ",data);
             return data;
         } catch (error:any) {
             console.log("error: "+error)
@@ -40,15 +41,15 @@ export const searchProduct = createAsyncThunk("products/searchProduct",
 export const fetchAllProducts = createAsyncThunk<any,any>("products/fetchAllProducts",
     async(params,{rejectWithValue})=>{
         try {
-            const response = await api.get(`${API_URL}/`,{
+            const response = await api.get(`${API_URL}`,{
                 params:{
                     ...params,
                     pageNumber:params.pageNumber || 0
                 },
             });
             
-            const data = await response.data;
-            console.log("All product data : "+data);
+            const data = response.data;
+            console.log("All product data : ",data);
             return data;
         } catch (error:any) {
             console.log("error: "+error)
@@ -97,7 +98,7 @@ const productSlice = createSlice({
         });
         builder.addCase(fetchAllProducts.fulfilled,(state,action)=>{
             state.loading = false;
-            state.products=action.payload; 
+            state.products=action.payload?.content || []; 
         });
         builder.addCase(fetchAllProducts.rejected,(state,action)=>{
             state.loading = false;
@@ -109,7 +110,7 @@ const productSlice = createSlice({
         });
         builder.addCase(searchProduct.fulfilled,(state,action)=>{
             state.loading = false;
-            state.searchProduct=action.payload; 
+            state.searchProduct=action.payload?.content || []; 
         });
         builder.addCase(searchProduct.rejected,(state,action)=>{
             state.loading = false;

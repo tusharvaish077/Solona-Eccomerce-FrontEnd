@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StarIcon from '@mui/icons-material/Star';
 import AddIcon from '@mui/icons-material/Add';
 import { teal } from '@mui/material/colors';
@@ -6,34 +6,46 @@ import { Button, Divider } from '@mui/material';
 import { AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet, WorkspacePremium } from '@mui/icons-material';
 import SimilarProducts from './SimilarProducts';
 import ReviewCard from '../Review/ReviewCard';
-import { useAppDispatch } from '../../../State/Store';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { useParams } from 'react-router-dom';
+import { fetchProductById } from '../../../State/customer/ProductSlice';
 
 const PageDetails = () => {
 
   const [quantity, setQuantity] = useState(1);
   const dispatch= useAppDispatch();
+  const {productId} = useParams();
+  const {product} = useAppSelector(store=>store);
+  const [activeImage, setActiveImage] = useState(0);
+
+  useEffect(() => {
+    dispatch(fetchProductById(Number(productId)))
+  }, [productId]);
+  const handleAcivImage =(value:number) =>()=>{
+    setActiveImage(value)
+  }
   return (
     <div className='px-5 lg:px-20 pt-10'>
          <div className='grid grid-col-1 lg:grid-cols-2 gap-10'>
             <section className='flex flex-col lg:flex-row gap-5'>
 
               <div className='w-full lg:w-[15%] flex flex-wrap lg:flex-col gap-3'>
-                {[1,1,1,1].map((item)=>
-                <img className='w-[50px] lg:w-full rounded-md cursor-pointer'
-                   src='https://m.media-amazon.com/images/I/71POSeQhetL._SY879_.jpg' alt=''/>)}
+                {product.product?.images.map((item,index)=>
+                <img onClick={handleAcivImage(index)} className='w-[50px] lg:w-full rounded-md cursor-pointer'
+                   src={item} alt=''/>)}
               </div>
 
               <div className='w-full lg:w-[85%]'>
                 <img className='w-full rounded-md'
-                 src="https://m.media-amazon.com/images/I/71qJVX1UzML._SY879_.jpg" alt="" />
+                 src={product.product?.images[activeImage]} alt="" />
               </div>
             </section>
             <section>
               <h1 className='font-bold text-lg lg:text-2xl text-primary-color'>
-                Manyavar
+                {product.product?.seller?.businessDetails.businessName}
               </h1>
               <p className='text-gray-500 font-semibold'>
-                Women Maroon Saree
+                {product.product?.title}
               </p>
               <div className='flex justify-between items-center py-2 border w-[180px] px-3 pt-5 mt-5'>
 
@@ -48,13 +60,13 @@ const PageDetails = () => {
               <div>
                 <div className='price flex items-center gap-3 mt-5 text-2xl'>
                   <span className='font-sans text-gray-800'>
-                    ₹900
+                    ₹{product.product?.sellingPrice}
                   </span>
                   <span className='line-through text-gray-400'>
-                    ₹1499
+                    ₹{product.product?.mrpPrice}
                   </span>
                   <span className='text-primary-color font-semibold'>
-                    60%
+                   {product.product?.discountPercent}%
                   </span>
                 </div>
 
@@ -122,7 +134,9 @@ const PageDetails = () => {
               </div>
 
               <div className='mt-5 text-sm'>
-                <p>The saree comes with embroidered Banarasi Pattern enriching the pious culutre of Varanasi. The blouse comes as unstiched piece the images shown are illustaration of afterwork in blouse piece.</p>
+                <p>
+                {product.product?.description}    
+                </p>
               </div>
               
               <div className='mt-12 space-y-5'>

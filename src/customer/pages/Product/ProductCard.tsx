@@ -3,24 +3,26 @@ import './ProductCard.css';
 import Button from '@mui/material/Button';
 import { Favorite, ModeComment } from '@mui/icons-material';
 import { teal } from '@mui/material/colors';
+import { Product } from '../../../types/ProuductTypes';
+import { useNavigate } from 'react-router-dom';
 
-const images = [
-  'https://m.media-amazon.com/images/I/514jUYwSHzL._SX679_.jpg',
-  'https://m.media-amazon.com/images/I/51dUBnrQwOL._SX679_.jpg',
-  "https://m.media-amazon.com/images/I/61FvUXJ7rzL._SX679_.jpg",
-  "https://m.media-amazon.com/images/I/51ZccFdFBSL._SX679_.jpg"
-];
+// const images = [
+//   'https://m.media-amazon.com/images/I/514jUYwSHzL._SX679_.jpg',
+//   'https://m.media-amazon.com/images/I/51dUBnrQwOL._SX679_.jpg',
+//   "https://m.media-amazon.com/images/I/61FvUXJ7rzL._SX679_.jpg",
+//   "https://m.media-amazon.com/images/I/51ZccFdFBSL._SX679_.jpg"
+// ];
 
-const ProductCart = () => {
+const ProductCart = ({item}:{item:Product}) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     let interval: any;
 
     if (isHovered) {
       interval = setInterval(() => {
-        setCurrentImage((prevImage) => (prevImage + 1) % images.length);
+        setCurrentImage((prevImage) => (prevImage + 1) % item.images.length);
       }, 2000);
     }
 
@@ -28,13 +30,13 @@ const ProductCart = () => {
   }, [isHovered]);
 
   return (
-    <div className="group px-4 relative">
+    <div onClick={()=>navigate(`/product-details/${item.category?.categoryId}/${item.title}/${item.id}`)} className="group px-4 relative">
       <div
         className="card"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {images.map((item, index) => (
+        {item.images.map((item, index) => (
           <img
             key={index}
             className="card-media object-top"
@@ -64,20 +66,20 @@ const ProductCart = () => {
       <div className='details pt-3 space-y-1 group-hover-effect rounded-md'>
         <div className="name">
           <h1>
-            Monte Carlo
+            {item.seller?.businessDetails.businessName}
           </h1>
-          <p>Black Shirt</p>
+          <p>{item.title}</p>
 
         </div>
         <div className='price flex items-center gap-3'>
           <span className='font-sans text-gray-800'>
-            ₹900
+            ₹{item.sellingPrice}
           </span>
           <span className='thin-line-through text-gray-400'>
-            ₹1499
+            ₹{item.mrpPrice}
           </span>
           <span className='text-primary-color font-semibold'>
-            60%
+            {item.discountPercent}%
           </span>
         </div>
       </div> 

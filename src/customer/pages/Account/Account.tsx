@@ -7,6 +7,8 @@ import OrderDetails from './OrderDetails'
 import UserDetails from './UserDetails'
 import AddressCard from '../Checkout/AddressCard'
 import Address from './Address'
+import { useAppDispatch } from '../../../State/Store'
+import { logout } from '../../../State/AuthSlice'
 
 
 const menu=[
@@ -18,9 +20,13 @@ const menu=[
 ]
 const Account = () => {
     const navigate = useNavigate();
-
+    const dispatch = useAppDispatch();
     const handleClick =(item:any)=>{
+        if(item.path == "/"){
+            dispatch(logout(navigate));
+        }
         navigate(item.path);
+        
     }
     const location= useLocation();
   return (
@@ -48,7 +54,7 @@ const Account = () => {
                 <Routes>
                     <Route path='/' element={<UserDetails/>}/>
                     <Route path='/orders' element={<Orders/>}/>
-                    <Route path='/order/:OrderId/:orderItemId' element={<OrderDetails/>}/>
+                    <Route path='/order/:orderId/:orderItemId' element={<OrderDetails/>}/>
                     <Route path='/addresses' element={<Address/>}/>
                 </Routes>
             </section>

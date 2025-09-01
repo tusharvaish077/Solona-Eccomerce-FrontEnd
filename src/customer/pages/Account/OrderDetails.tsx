@@ -1,22 +1,36 @@
 import { Box, Button, Divider } from '@mui/material'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import OrderStepper from './OrderStepper';
 import { Payments } from '@mui/icons-material';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { fetchorderById, fetchOrderItemById } from '../../../State/customer/orderSlice';
 
 const OrderDetails = () => {
     const navigate = useNavigate();
+    const dispatch= useAppDispatch();
+    const {orderId, orderItemId} = useParams<{ orderId: string; orderItemId: string }>();
+      const order = useAppSelector((state) => state.order);
+
+    useEffect(() => {
+        console.log(order);
+        console.log("orderItemId "+orderItemId, "orderId "+orderId);
+        dispatch(fetchorderById({orderId:Number(orderId), jwt:localStorage.getItem("jwt")||""}));
+        dispatch(fetchOrderItemById({orderItemId:Number(orderItemId), jwt: localStorage.getItem("jwt")||""}));
+    }, []);
   return (
     <div>
        <Box className='space-y-5'>
         <section className="flex flex-col gap-5 jsutify-center items-center">
-            <img src="https://m.media-amazon.com/images/I/71rbX-kQQBL._AC_UL480_FMwebp_QL65_.jpg" alt="" className="w-[100px]" />
+            <img className="w-[100px]" src={order.orderItem?.product.images[0]} alt="" />
         
-       
-            <h1 className="font-bold">{"Samsung Inc."}
-            </h1>
-            <p>{"Samsung 7 kg, 5 Star, AI Control, Wi-Fi, Digital Inverter, Motor, Fully-Automatic Front Load Washing Machine (WW70T502NAN1TL, Hygiene Steam, Inox)"}</p>
-            <p><strong>Capacity: </strong>7Kg</p>
+            <div className="text-sm space-y-1 text-center">
+                <h1 className="font-bold">{order.orderItem?.product.seller?.businessDetails.businessName}
+                </h1>
+                <p>{order.orderItem?.product.title}</p>
+                <p><strong>Capacity: </strong>7Kg</p>
+            </div>
+            
             <div>
                 <Button onClick={()=>navigate(`/reviews/${5}/create`)}>
                     Write Review

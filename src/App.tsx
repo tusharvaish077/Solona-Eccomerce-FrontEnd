@@ -18,23 +18,33 @@ import AdminDashboard from './admin/Pages/Dashboard/AdminDashboard';
 import { fetchProducts } from './State/fetchProduct';
 import { useAppDispatch, useAppSelector } from './State/Store';
 import { fetchSellerProfile } from './State/seller/sellerSlice';
+import Auth from './customer/pages/Auth/Auth';
+import { fetchUserProfile } from './State/AuthSlice';
+import PaymentSuccess from './customer/pages/Checkout/PaymentSuccess';
 
 
 function App() {
   const dispatch = useAppDispatch();
-  const {seller} = useAppSelector(store =>store)
+  const {seller,auth} = useAppSelector(store =>store)
   const navigate = useNavigate();
 
   useEffect(()=>{
     dispatch(fetchSellerProfile(localStorage.getItem("jwt")||""));
-    fetchProducts();
+    //fetchProducts();
   },[]);
 
   useEffect(()=>{
     if(seller.profile){
       navigate("/seller");
     }
-  },[seller.profile])
+  },[seller.profile]);
+
+  useEffect(()=>{
+    dispatch(fetchUserProfile({jwt:auth.jwt || localStorage.getItem("jwt") || ""}));
+  },[auth.jwt])
+
+
+
   return (
     
 <ThemeProvider theme={theme}>
@@ -52,15 +62,18 @@ function App() {
 
       <Routes>
         <Route path ="/" element={<Home/>}/>
+        <Route path ="/login" element={<Auth/>}/>
         <Route path ="/products/:category" element={<Product/>}/>
         <Route path ="/reviews/:productId" element={<Review/>}/>
         <Route path ="/product-details/:category/:name/:productId" element={<ProductDetails/>}/>
         <Route path ="/cart" element={<Cart/>}/>
         <Route path ="/checkout" element={<Checkout/>}/>
+        <Route path ="/payment-success/:orderId" element={<PaymentSuccess/>}/>
         <Route path ="/account/*" element={<Account/>}/>
         <Route path ="/become-seller/*" element={<BecomeSeller/>}/>
         <Route path ="/seller/*" element={<SellerDashboard/>}/>
         <Route path ="/admin/*" element={<AdminDashboard/>}/>
+        
       </Routes>
 
 
