@@ -1,8 +1,10 @@
 import React from 'react'
 import ProfileFieldCard from '../../components/ProfileFieldCard'
 import { Divider } from '@mui/material'
+import { useAppSelector } from '../../../State/Store'
 
 const UserDetails = () => {
+  const {auth}= useAppSelector(store=>store);
   return (
     <div className='flex justify-center py-10'>
 
@@ -12,11 +14,11 @@ const UserDetails = () => {
             </div>
 
             <div>
-                <ProfileFieldCard label='Name' value={'Sanjay Gandhi'} />
+                <ProfileFieldCard label='Name' value={auth.user?.fullName || ""} />
                 <Divider/>
-                <ProfileFieldCard label='Email' value={'sanj@gmail.com'} />
+                <ProfileFieldCard label='Email' value={auth.user?.email || ""} />
                 <Divider/>
-                <ProfileFieldCard label='Mobile' value={'57356345'} />
+                <ProfileFieldCard label='Mobile' value={auth.user?.mobile || ""} />
             </div>
         </div>
     </div>

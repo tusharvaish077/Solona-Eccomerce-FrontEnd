@@ -10,10 +10,12 @@ const OrderDetails = () => {
     const navigate = useNavigate();
     const dispatch= useAppDispatch();
     const {orderId, orderItemId} = useParams<{ orderId: string; orderItemId: string }>();
-      const order = useAppSelector((state) => state.order);
+    const {order} = useAppSelector(store => store);
+
+
 
     useEffect(() => {
-        console.log(order);
+        console.log("order mera", order);
         console.log("orderItemId "+orderItemId, "orderId "+orderId);
         dispatch(fetchorderById({orderId:Number(orderId), jwt:localStorage.getItem("jwt")||""}));
         dispatch(fetchOrderItemById({orderItemId:Number(orderItemId), jwt: localStorage.getItem("jwt")||""}));
@@ -25,10 +27,10 @@ const OrderDetails = () => {
             <img className="w-[100px]" src={order.orderItem?.product.images[0]} alt="" />
         
             <div className="text-sm space-y-1 text-center">
-                <h1 className="font-bold">{order.orderItem?.product.seller?.businessDetails.businessName}
+                <h1 className="font-bold">{order.orderItem?.product.title}
                 </h1>
                 <p>{order.orderItem?.product.title}</p>
-                <p><strong>Capacity: </strong>7Kg</p>
+                <p><strong>Size: </strong>{order.orderItem?.product.sizes}</p>
             </div>
             
             <div>
@@ -47,12 +49,17 @@ const OrderDetails = () => {
             <h1 className="font-bold pb-3">Delivery Address</h1>
             <div className="text-sm space-y-2">
                 <div className="flex gap-5 font-medium">
-                    <p>{"Tushar"}</p>
+                    <p>{order.currentOrder?.shippingAddress.name}</p>
                     <Divider flexItem orientation='vertical'/>
-                    <p>{67445345}</p>
+                    <p>{order.currentOrder?.shippingAddress.mobile}</p>
                     
                 </div>
-                <p>Noida City Grandtrunk road under the haunted Underpass</p>
+                <p>
+                {order.currentOrder?.shippingAddress.address},{" "}
+                {order.currentOrder?.shippingAddress.state},{" "}
+                {order.currentOrder?.shippingAddress.city} {" "}
+                {order.currentOrder?.shippingAddress.pinCode}
+                {/* Noida City Grandtrunk road under the haunted Underpass */}</p> 
             </div>
         </div>
         <div className="border space-y-4">
@@ -61,7 +68,7 @@ const OrderDetails = () => {
                     <p className="font-bold">Total Item Price</p>
                     <p>You saved<span className="text-green-500 font-medium text-xs">₹{800}.00</span> on this item</p>
                 </div>
-                <p className="font-medium">₹{78}.00</p>
+                <p className="font-medium">₹{order.orderItem?.sellingPrice}.00</p>
             </div>
 
             <div className="px-5">
@@ -73,7 +80,7 @@ const OrderDetails = () => {
             </div>
             <Divider/>
             <div className="px-5 pb-5">
-                <p className="text-xs"><strong>Sold by : </strong>Trade Hull Enterprise</p>
+                <p className="text-xs"><strong>Sold by : </strong>{order.orderItem?.product.seller?.businessDetails.businessName}</p>
             </div>
             <div className="p-10">
                 <Button disabled={false} color='error' sx={{py:"0.7rem"}} className='' variant='outlined' fullWidth>

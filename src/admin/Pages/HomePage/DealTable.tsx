@@ -8,6 +8,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { useEffect } from 'react';
+import { getAllDeals } from '../../../State/admin/DealSlice';
 
 function createData(
   name: string,
@@ -28,6 +31,13 @@ const rows = [
 ];
 
 export default function DealTable() {
+  const dispatch = useAppDispatch();
+  const deal = useAppSelector((state) => state.deal);
+
+
+  useEffect(() => {
+    dispatch(getAllDeals());    
+  }, []);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -43,17 +53,19 @@ export default function DealTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {deal.deals.map((item,index) => (
             <TableRow
-              key={row.name}
+              key={item.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {index+1}
               </TableCell>
-              <TableCell >{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell >
+                <img className='w-20 rounded-md' src={item.category.image} alt="" />
+              </TableCell>
+              <TableCell>{item.category.categoryId}</TableCell>
+              <TableCell align="right">{item.discount}</TableCell>
               <TableCell align="right">
                             <Button>
                                 <Edit/>

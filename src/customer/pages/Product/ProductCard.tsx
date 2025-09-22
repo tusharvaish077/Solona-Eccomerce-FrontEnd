@@ -5,6 +5,8 @@ import { Favorite, ModeComment } from '@mui/icons-material';
 import { teal } from '@mui/material/colors';
 import { Product } from '../../../types/ProuductTypes';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../State/Store';
+import { AddProductToWishlist } from '../../../State/customer/wishlistSlice';
 
 // const images = [
 //   'https://m.media-amazon.com/images/I/514jUYwSHzL._SX679_.jpg',
@@ -17,6 +19,7 @@ const ProductCart = ({item}:{item:Product}) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     let interval: any;
 
@@ -28,7 +31,10 @@ const ProductCart = ({item}:{item:Product}) => {
 
     return () => clearInterval(interval);
   }, [isHovered]);
-
+  const handleWishlist =(e: React.MouseEvent<HTMLButtonElement>)=>{
+    e.stopPropagation();
+    item.id && dispatch(AddProductToWishlist({ productId:item.id}));
+  }
   return (
     <div onClick={()=>navigate(`/product-details/${item.category?.categoryId}/${item.title}/${item.id}`)} className="group px-4 relative">
       <div
@@ -49,7 +55,7 @@ const ProductCart = ({item}:{item:Product}) => {
           <div  className='indicator flex-col items-center space-y-2'>
 
             <div className='flex gap-3'>
-              <Button variant ='contained' color='secondary'>
+              <Button onClick={(e)=>handleWishlist(e)} variant ='contained' color='secondary'>
                 <Favorite sx={{color:teal[500]}}/>
                 
                 

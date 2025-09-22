@@ -1,9 +1,12 @@
 import React from 'react'
 import HomeCategoryTable from './HomeCategoryTable'
+import { useAppSelector } from '../../../State/Store';
 
 const ElectronicTable = () => {
+  const {home} = useAppSelector(store => store);
+  console.log(home);
   return (
-    <div><HomeCategoryTable/></div>
+    <div><HomeCategoryTable data={home.homePageData?.electrricCategories || []}/></div>
    
   )
 }

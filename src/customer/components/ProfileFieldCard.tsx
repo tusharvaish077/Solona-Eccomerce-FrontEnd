@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material'
 import React from 'react'
 
-const ProfileFieldCard = ({label, value}:{label:string, value:string}) => {
+const ProfileFieldCard = ({label, value}:{label:string, value:String}) => {
   return (
     <div className='p-5 flex bg-slate-100 rounded-md'>
         <p className="w-20 lg:w-36 pr-5">{label}</p>

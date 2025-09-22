@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { fetchTransactionsBySeller } from '../../../State/seller/transactionSlice';
 
 function createData(
   name: string,
@@ -26,6 +28,12 @@ const rows = [
 ];
 
 export default function Transaction() {
+  const dispatch = useAppDispatch();
+  const {transaction} = useAppSelector(store=>store);
+  React.useEffect(() => {
+    
+    dispatch(fetchTransactionsBySeller(localStorage.getItem("jwt") || ""))
+  }, []);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -38,17 +46,17 @@ export default function Transaction() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {transaction.transactions.map((item) => (
             <TableRow
-              key={row.name}
+              key={item.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {item.customer.email}
               </TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{item.order.id}</TableCell>
+              <TableCell align="right">{item.order.totalSellignPrice}</TableCell>
+              {/* <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material'
 import path from 'path'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Orders from './Orders'
 import OrderDetails from './OrderDetails'
@@ -9,6 +9,7 @@ import AddressCard from '../Checkout/AddressCard'
 import Address from './Address'
 import { useAppDispatch } from '../../../State/Store'
 import { logout } from '../../../State/AuthSlice'
+import { getWishlistByUserId } from '../../../State/customer/wishlistSlice'
 
 
 const menu=[
@@ -29,6 +30,9 @@ const Account = () => {
         
     }
     const location= useLocation();
+    useEffect(() => {
+        dispatch(getWishlistByUserId());
+    }, []);
   return (
     <div className='px-g lg:px-52 min-h-screen mt-10'>
         <div>

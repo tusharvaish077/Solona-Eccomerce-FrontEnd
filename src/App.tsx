@@ -21,6 +21,10 @@ import { fetchSellerProfile } from './State/seller/sellerSlice';
 import Auth from './customer/pages/Auth/Auth';
 import { fetchUserProfile } from './State/AuthSlice';
 import PaymentSuccess from './customer/pages/Checkout/PaymentSuccess';
+import Wishlist from './customer/pages/Wishlist/Wishlist';
+import { getWishlistByUserId } from './State/customer/wishlistSlice';
+import { createHomeCategories, fetchHomePageData } from './State/customer/customers/asyncThunks';
+import { homeCategories } from './data/HomeCategories';
 
 
 function App() {
@@ -30,6 +34,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(fetchSellerProfile(localStorage.getItem("jwt")||""));
+    dispatch(createHomeCategories(homeCategories));
     //fetchProducts();
   },[]);
 
@@ -41,6 +46,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(fetchUserProfile({jwt:auth.jwt || localStorage.getItem("jwt") || ""}));
+    dispatch(fetchHomePageData())
   },[auth.jwt])
 
 
@@ -67,6 +73,7 @@ function App() {
         <Route path ="/reviews/:productId" element={<Review/>}/>
         <Route path ="/product-details/:category/:name/:productId" element={<ProductDetails/>}/>
         <Route path ="/cart" element={<Cart/>}/>
+        <Route path ="/wishlist" element={<Wishlist/>}/>
         <Route path ="/checkout" element={<Checkout/>}/>
         <Route path ="/payment-success/:orderId" element={<PaymentSuccess/>}/>
         <Route path ="/account/*" element={<Account/>}/>

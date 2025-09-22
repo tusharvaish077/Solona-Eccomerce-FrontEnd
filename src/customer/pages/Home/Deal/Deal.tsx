@@ -1,24 +1,51 @@
-import React from 'react'
+
 import DealCard from './DealCard'
-// import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React from "react";
+import Slider from "react-slick";
+import { useAppSelector } from '../../../../State/Store';
+
+
 const Deal = () => {
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 3,
-  //   slidesToScroll: 3
-  // };
+  const { home } = useAppSelector(store => store)
+  var settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 2000,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
+        responsive: [
+            {
+              breakpoint: 1024, // Large screen
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+              },
+            },
+            {
+              breakpoint: 768, // Tablet
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+              },
+            },
+            {
+              breakpoint: 480, // Mobile
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              },
+            },
+          ],
+
+    };
   return (
     
     <div  className='py-5 lg:px-20'>
         <div className='flex items-center justify-between'>
-          {/* <Slider {...settings}>
-        
-        </Slider> */}
-        {[1,1,1,1,1,1].map((item)=><DealCard/>)}
+            {home.homePageData?.deals?.map((item)=><DealCard item={item}/>)}
         </div>
     </div>
   )

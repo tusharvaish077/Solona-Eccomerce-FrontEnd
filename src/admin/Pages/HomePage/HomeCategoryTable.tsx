@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { Edit } from '@mui/icons-material';
+import { HomeCategory } from '../../../types/HomeCategoryTypes';
 
 function createData(
   name: string,
@@ -27,7 +28,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function HomeCategoryTable() {
+export default function HomeCategoryTable({data}:{data:HomeCategory[]}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -41,17 +42,20 @@ export default function HomeCategoryTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data.map((category, index) => (
             <TableRow
-              key={row.name}
+              key={category.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {index+1}
               </TableCell>
-              <TableCell >{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell >{category.id}</TableCell>
+              <TableCell>
+                <img className='w-20 rounded-md'
+                src={category.image} alt=''/>
+              </TableCell>
+              <TableCell align="right">{category.categoryId}</TableCell>
               <TableCell align="right">
                 <Button>
                     <Edit/>
