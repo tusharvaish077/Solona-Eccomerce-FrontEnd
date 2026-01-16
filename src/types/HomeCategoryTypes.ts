@@ -13,7 +13,8 @@ interface Deal{
 
 export interface HomeData {
   id: number; 
-  grid: HomeCategory[]; 
+  grid: HomeCategory[];
+  adBanner:HomeCategory[]; 
   shopByCategories: HomeCategory[]; 
   electrricCategories: HomeCategory[]; 
   deals: Deal[]; 

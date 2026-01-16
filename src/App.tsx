@@ -27,6 +27,7 @@ import { createHomeCategories, fetchHomePageData } from './State/customer/custom
 import { homeCategories } from './data/HomeCategories';
 
 
+
 function App() {
   const dispatch = useAppDispatch();
   const {seller,auth} = useAppSelector(store =>store)
@@ -58,6 +59,7 @@ function App() {
   {/* start */}
   <div className="">
      <Navbar/>
+
      {/* <Home/> */}
      {/* <Product/> */}
      {/* <ProductDetails/> */}

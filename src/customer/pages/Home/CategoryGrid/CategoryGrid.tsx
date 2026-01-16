@@ -1,9 +1,11 @@
 import React from 'react'
+import { useAppSelector } from '../../../../State/Store'
 
 const CategoryGrid = () => {
+     const { home } = useAppSelector(store => store);
   return (
     <div className='grid gap-4 grid-rows-12 grid-cols-12 lg:h-[600px] px-5 lg:px-20'>
-        <div className="col-span-3 row-span-12 text-white">
+        {/* <div className="col-span-3 row-span-12 text-white">
             <img className='w-full h-full object-cover object-top rounded-md' src="https://manyavar.scene7.com/is/image/manyavar/9000004362.21730_13-05-2023-23-31:650x900?&dpr=on,2" alt="" />
         </div>
         <div className="col-span-2 row-span-6 text-white">
@@ -20,6 +22,24 @@ const CategoryGrid = () => {
         </div>
         <div className="col-span-2 row-span-6 text-white">
              <img className='w-full h-full object-cover object-top rounded-md' src="https://m.media-amazon.com/images/I/812S2vpReAL._SX679_.jpg" alt="" />
+        </div> */}
+        <div className="col-span-3 row-span-12 text-white">
+            <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[0].image} alt="" />
+        </div>
+        <div className="col-span-2 row-span-6 text-white">
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[1].image} alt="" />
+        </div>
+        <div className="col-span-4 row-span-6 text-white">
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[2].image} alt="" />
+        </div>
+        <div className="col-span-3 row-span-12 text-white">
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[3].image} alt="" />
+        </div>
+        <div className="col-span-4 row-span-6 text-white">
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[4].image} alt="" />
+        </div>
+        <div className="col-span-2 row-span-6 text-white">
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[5].image} alt="" />
         </div>
     </div>
   )

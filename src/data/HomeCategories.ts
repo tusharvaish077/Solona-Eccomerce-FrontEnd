@@ -27,25 +27,37 @@ export const homeCategories = [
     categoryId: "headphones",
     section: "GRID",
     name: "Headphones",
-    image: "https://images.unsplash.com/photo-1518443474974-604a7f8a507a?auto=format&fit=crop&w=312&q=80"
+    image: "https://manyavar.scene7.com/is/image/manyavar/9000004362.21730_13-05-2023-23-31:650x900?&dpr=on,2"
   },
   {
     categoryId: "cameras",
     section: "GRID",
     name: "Cameras",
-    image: "https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=312&q=80"
+    image: "https://rukminim2.flixcart.com/image/612/612/xif0q/shoe/p/l/n/6-mexico-11-6-asian-green-original-imah3nxzfcgrn75k.jpeg?q=70"
   },
   {
     categoryId: "televisions",
     section: "GRID",
     name: "Televisions",
-    image: "https://images.unsplash.com/photo-1510626176961-4b5327c7f39e?auto=format&fit=crop&w=312&q=80"
+    image: "https://www.giva.co/cdn/shop/files/BR044_5_c034f584-b788-4700-be5e-662d1c4a7597.jpg?v=1739884341&width=713"
   },
   {
     categoryId: "speakers",
     section: "GRID",
     name: "Speakers",
-    image: "https://images.unsplash.com/photo-1536483385665-3b254db2025b?auto=format&fit=crop&w=312&q=80"
+    image: "https://manyavar.scene7.com/is/image/manyavar/SDES1160_316-Dark+Green_101.8174_26-09-2024-14-59:650x900?&dpr=on,2"
+  },
+    {
+    categoryId: "speakers",
+    section: "GRID",
+    name: "Speakers",
+    image: "https://www.tanishq.co.in/on/demandware.static/-/Sites-Tanishq-product-catalog/default/dwd8356bd1/images/hi-res/51D4G2VAS1A00_1.jpg"
+  },
+    {
+    categoryId: "speakers",
+    section: "GRID",
+    name: "Speakers",
+    image: "https://m.media-amazon.com/images/I/812S2vpReAL._SX679_.jpg"
   },
   {
     categoryId: "refrigerators",
@@ -95,5 +107,38 @@ export const homeCategories = [
     name: "Wi-Fi Routers",
     image: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=312&q=80"
   },
+  {
+    categoryId: "routers",
+    section: "AD_BANNER",
+    name: "Wi-Fi Routers",
+    image: "https://plus.unsplash.com/premium_photo-1681488121831-a82d558a77e9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    categoryId: "routers",
+    section: "AD_BANNER",
+    name: "Wi-Fi Routers",
+    image: "https://images.unsplash.com/photo-1585314614250-d213876625e1?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    categoryId: "routers",
+    section: "AD_BANNER",
+    name: "Wi-Fi Routers",
+    image: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=312&q=80"
+  },
+  {
+    categoryId: "routers",
+    section: "AD_BANNER",
+    name: "Wi-Fi Routers",
+    image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"},
+  {
+    categoryId: "routers",
+    section: "AD_BANNER",
+    name: "Wi-Fi Routers",
+    image: "https://plus.unsplash.com/premium_photo-1681566925324-ee1e65d9d53e?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"},
+  {
+    categoryId: "routers",
+    section: "AD_BANNER",
+    name: "Wi-Fi Routers",
+    image: "https://images.unsplash.com/photo-1624434207357-34e782936956?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
   
 ];

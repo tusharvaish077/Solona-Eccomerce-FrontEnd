@@ -5,6 +5,9 @@ import { useFormik } from 'formik';
 import BecomeSellerFormStep2 from './BecomeSellerFormStep2';
 import BecomeSellerFormStep4 from './BecomeSellerFormStep4';
 import BecomeSellerFormStep3 from './BecomeSellerFormStep3';
+import { useDispatch } from 'react-redux';
+import { createSeller } from '../../../State/seller/sellerAuthSlice';
+import { useAppDispatch } from '../../../State/Store';
 
 const steps=[
     "Tax Details & Mobile",
@@ -14,14 +17,15 @@ const steps=[
 ]
 const SellerAccountForm = () => {
     const [activeStep, setActiveStep] = useState(1);
-
+    const dispatch = useAppDispatch();
     const handleStep=(value:number)=>{
         ((activeStep>0 && value == -1) || activeStep<steps.length-1) && setActiveStep(activeStep+value);
         
          activeStep == steps.length-1 && handleCreateAccount();
     }
     const handleCreateAccount =()=>{
-        console.log("Create Account")
+        console.log("Create Account");
+        formik.handleSubmit();
     }
     const formik = useFormik(
         {
@@ -59,6 +63,7 @@ const SellerAccountForm = () => {
           onSubmit: (values) => {
             console.log(values, "formik submitted")
             console.log('active step ', activeStep)
+            dispatch(createSeller(formik.values));
           }
         }
       )

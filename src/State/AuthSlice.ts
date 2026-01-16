@@ -1,14 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../config/Api";
 import { User } from "../types/userTypes";
+import { stat } from "fs";
 
 export const sendLoginSignupOtp =createAsyncThunk("/auth/sendLoginSignupOtp",
-    async({email}:{email:string}, {rejectWithValue})=>{
+    async({email,role}:{email:string,role:string}, {rejectWithValue})=>{
         try {
-            const response = await api.post("/auth/sent/login-signup-otp",{email})
-            console.log("login otp",response)
-        } catch (error) {
+            const response = await api.post("/auth/sent/login-signup-otp",{email,role})
+            console.log("login otp",response);
+            return response.data;
+        } catch (error:any) {
             console.log("error ---- > ", error);
+            return rejectWithValue(error.response.data.error||'Failed to send OTP');
         }
     }
 )
@@ -29,7 +32,8 @@ export const signin =createAsyncThunk<any, any>("/auth/signin",
 export const signup =createAsyncThunk<any, any>("/auth/signup",
     async(signupRequest, {rejectWithValue})=>{
         try {
-            const response = await api.post("/auth/signup",signupRequest)
+            const response = await api.post("/auth/signup",signupRequest);
+            signupRequest.navigate("/");
             console.log("login otp",response.data);
             localStorage.setItem("jwt",response.data.jwt);
             return response.data.jwt;
@@ -74,6 +78,7 @@ interface AuthSate{
     isLoggedIn:boolean,
     user:User |null,
     loading:boolean
+    error:String|null
 }
 const initialState:AuthSate={
     jwt:null,
@@ -81,6 +86,7 @@ const initialState:AuthSate={
     isLoggedIn:false,
     user:null,
     loading:false,
+    error: null
 }
 
 const authSlice = createSlice({
@@ -89,26 +95,43 @@ const authSlice = createSlice({
     reducers:{},
     extraReducers:(builder)=>{
         builder.addCase(sendLoginSignupOtp.pending, (state)=>{
-            state.loading=true;
+            state.loading = true;
+            state.error = null;
         })
         builder.addCase(sendLoginSignupOtp.fulfilled, (state)=>{
-            state.loading=false;
-            state.otpSent=true;
+            state.loading = false;
+            state.otpSent = true;
         })
-        builder.addCase(sendLoginSignupOtp.rejected, (state)=>{
-            state.loading=false;
+        builder.addCase(sendLoginSignupOtp.rejected, (state,action)=>{
+            state.loading = false;
+            state.error = action.payload as string;
         })
+        builder.addCase(signin.pending,(state,action)=>{
+            state.loading = true;
+            state.isLoggedIn = true;
+        })      
         builder.addCase(signin.fulfilled,(state,action)=>{
             state.jwt=action.payload;
             state.isLoggedIn = true;
-        })
-        builder.addCase(signup.fulfilled,(state,action)=>{
-            state.jwt=action.payload;
-            state.isLoggedIn = true;
-        })        
+        })       
+         builder.addCase(signup.rejected,(state,action)=>{
+            state.isLoggedIn = false;
+            state.error = action.payload as string;
+        })       
+        builder.addCase(fetchUserProfile.pending,(state)=>{
+            state.loading= true;
+            state.isLoggedIn= false;
+            state.user=null;
+        }) 
         builder.addCase(fetchUserProfile.fulfilled,(state,action)=>{
-            state.user = action.payload
-            state.isLoggedIn= true;
+            state.user = action.payload;
+           state.loading=false;
+        })
+        builder.addCase(fetchUserProfile.rejected,(state,action)=>{
+           state.loading = false;
+           state.user= null;
+           state.isLoggedIn= false;
+           state.error = action.payload as String;
         })
         builder.addCase(logout.fulfilled,(state)=>{
             state.jwt=null

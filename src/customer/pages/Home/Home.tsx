@@ -5,14 +5,25 @@ import ShopByCategory from './ShopByCategory/ShopByCategory'
 import screenshot from '../../../Assets/spring-beauty-young-beautiful-stylish-female-model-posing-against-pink-background-cross-arms-chest-smiling-happy.jpg';
 
 import Deal from './Deal/Deal'
-import { Button } from '@mui/material';
+import { Backdrop, Button, CircularProgress } from '@mui/material';
 import { Storefront } from '@mui/icons-material';
-
+import { useAppSelector } from '../../../State/Store';
+import HeroBanner from '../../components/HeroBanner';
+import SearchBar from '../../components/SearchBar';
+import AdBanner from './AdBanner/AdBanner';
 const Home = () => {
+  
+const { home } = useAppSelector(store => store);
+console.log(home);
   return (
     <>
+    { (!home.loading)?
         <div className="space-y-5 lg:space-y-10 relative">
+             <SearchBar/>
             <ElectricCategory/>
+               
+                 <HeroBanner/>
+                 <AdBanner/>
             <CategoryGrid/>
             <div className='pt-15'>
               <h1 className='text-lg lg:text-4xl font-bold text-primary-color
@@ -51,7 +62,12 @@ const Home = () => {
               
             </section>
 
-        </div>
+        </div>: <Backdrop
+                open={true}
+
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>}
     </>
   )
 }

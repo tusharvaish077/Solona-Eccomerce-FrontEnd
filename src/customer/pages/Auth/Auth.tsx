@@ -1,23 +1,73 @@
-import React, { useState } from 'react'
-import bannerImage from "../../../Assets/BannerImage.jpg";
+import React, { useEffect, useState } from 'react'
+import bannerImage from "../../../Assets/BanerImg.png";
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import { Button } from '@mui/material';
+import { Alert, Button, Snackbar } from '@mui/material';
+import { useAppSelector } from '../../../State/Store';
 const Auth = () => {
+  const { auth } = useAppSelector(store => store);
   const [isLogin, setIsLogin] = useState(true);
+   const handleCloseSnackbar = () => setSnackbarOpen(false);
+   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+   useEffect(() => {
+
+        if (auth.otpSent || auth.error) {
+            setSnackbarOpen(true);
+            console.log("store ", auth.error)
+        }
+
+    }, [auth.otpSent,auth.error])
   return (
-    <div className='flex justify-center h-[90vh] items-center mt-20 mb-5'>
-      <div className="max-w-md rounded-md border shadow-lg">
-        <img className='w-full rounded-t-md' src={bannerImage} alt="" />
-        <div className='mt-8 px-10'>
-          {isLogin? <LoginForm/>:<RegisterForm/>}
-          <div className="flex item-center gap-1 justify-center mt-5">
-            <p>{isLogin && "Don't "}have Account</p>
-            <Button size='small' onClick={()=>setIsLogin(!isLogin)}>{isLogin?"Create Account":"login"}</Button>
-          </div>
-        </div>    
+    <div className="flex items-center justify-center bg-gray-50 px-4 py-10">
+  <div className="flex w-full max-w-5xl rounded-xl overflow-hidden shadow-xl bg-white">
+    
+    {/* LEFT BANNER */}
+    <div className="hidden md:flex w-1/2 bg-gray-100 max-h-[420px]">
+      <img
+        src={bannerImage}
+        alt="Auth Banner"
+        className="object-cover w-full h-full"
+      />
+    </div>
+
+    {/* RIGHT FORM */}
+    <div className="w-full md:w-1/2 px-8 py-8">
+      <h2 className="text-xl font-semibold text-center mb-4">
+        {isLogin ? "Welcome Back" : "Create Account"}
+      </h2>
+
+      {isLogin ? <LoginForm /> : <RegisterForm />}
+
+      <div className="flex items-center justify-center gap-1 mt-4 text-sm">
+        <span>
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
+        </span>
+        <Button size="small" onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "Create Account" : "Login"}
+        </Button>
       </div>
     </div>
+  </div>
+
+  {/* Snackbar */}
+  <Snackbar
+    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    open={snackbarOpen}
+    autoHideDuration={6000}
+    onClose={handleCloseSnackbar}
+  >
+    <Alert
+      onClose={handleCloseSnackbar}
+      severity={auth.error ? "error" : "success"}
+      variant="filled"
+      sx={{ width: '100%' }}
+    >
+      {auth.error ? auth.error : "OTP sent to your email!"}
+    </Alert>
+  </Snackbar>
+</div>
+
   )
 }
 

@@ -8,10 +8,12 @@ const ElectricCategory = () => {
   console.log("CustomerData as homepage" ,home.homePageData?.electrricCategories);
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
-    <div className='flex flex-wrap justify-between py-5 lg:px-20 border-b'>
+    <div className='flex flex-wrap justify-between lg:px-10'>
         {/* {[1,1,1,1,1,1,1].map((item)=><ElectricCategoryCard/>)} */}
 
-        {home.homePageData?.electrricCategories?.slice(0, isSmallScreen ? 5 : home.homePageData?.electrricCategories.length).map((item)=><ElectricCategoryCard item ={item}/>)}
+        {home.homePageData?.electrricCategories?.slice(0,
+           isSmallScreen ? 5 : home.homePageData?.electrricCategories.length)
+           .map((item)=><ElectricCategoryCard item ={item}/>)}
         
     </div>
   )
