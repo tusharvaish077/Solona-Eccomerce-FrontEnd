@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // export const API_URL ="http://localhost:5454";
-export const API_URL ="https://solona-ecommerce.onrender.com";
+// export const API_URL ="https://solona-ecommerce.onrender.com";
+export const API_URL = process.env.REACT_APP_API_BASE_URL;
 export const api = axios.create({
     baseURL:API_URL,
     headers:{
