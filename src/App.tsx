@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './Theme/theme';
+// @ts-ignore: CSS module declarations are not available in this TS config
 import './App.css';
 import Navbar from './customer/components/Navbar/Navbar';
 import Home from './customer/pages/Home/Home';
@@ -36,7 +37,8 @@ function App() {
   useEffect(()=>{
     dispatch(fetchSellerProfile(localStorage.getItem("jwt")||""));
     dispatch(createHomeCategories(homeCategories));
-    //fetchProducts();
+    //  this line creating bug,
+    // this code is creating seed data which is incorrect. This need to be done by backend only
   },[]);
 
   useEffect(()=>{
@@ -47,6 +49,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(fetchUserProfile({jwt:auth.jwt || localStorage.getItem("jwt") || ""}));
+     console.log("Dispatching fetchHomePageData...");
     dispatch(fetchHomePageData())
   },[auth.jwt])
 

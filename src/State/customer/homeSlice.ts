@@ -21,19 +21,19 @@ const homeSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Handle fetchHomePageData lifecycle
-    // builder.addCase(fetchHomePageData.pending, (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    // });
-    // builder.addCase(fetchHomePageData.fulfilled, (state, action: PayloadAction<HomeData>) => {
-    //   state.loading = false;
-    //   state.homePageData = action.payload;
-    // });
-    // builder.addCase(fetchHomePageData.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.error.message || 'Failed to load home page data';
-    // });
+    //Handle fetchHomePageData lifecycle
+    builder.addCase(fetchHomePageData.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchHomePageData.fulfilled, (state, action: PayloadAction<HomeData>) => {
+      state.loading = false;
+      state.homePageData = action.payload;
+    });
+    builder.addCase(fetchHomePageData.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || 'Failed to load home page data';
+    });
 
     // Handle createHomeCategories lifecycle
     builder.addCase(createHomeCategories.pending, (state) => {

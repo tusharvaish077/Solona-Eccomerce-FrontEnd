@@ -9,6 +9,8 @@ export const fetchHomePageData = createAsyncThunk<HomeData>(
     try {
       const response = await api.get('/admin/home-category');
       console.log("home page ",response.data)
+      console.log(response.data);
+      console.log(Array.isArray(response.data));
       return response.data;
     } catch (error: any) {
       // Handle the error and return it to be used in rejected action

@@ -24,22 +24,22 @@ const CategoryGrid = () => {
              <img className='w-full h-full object-cover object-top rounded-md' src="https://m.media-amazon.com/images/I/812S2vpReAL._SX679_.jpg" alt="" />
         </div> */}
         <div className="col-span-3 row-span-12 text-white">
-            <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[0].image} alt="" />
+            <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid?.[0]?.image} alt="" />
         </div>
         <div className="col-span-2 row-span-6 text-white">
-             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[1].image} alt="" />
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid?.[1]?.image} alt="" />
         </div>
         <div className="col-span-4 row-span-6 text-white">
-             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[2].image} alt="" />
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid?.[2]?.image} alt="" />
         </div>
         <div className="col-span-3 row-span-12 text-white">
-             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[3].image} alt="" />
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid?.[3]?.image} alt="" />
         </div>
         <div className="col-span-4 row-span-6 text-white">
-             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[4].image} alt="" />
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid?.[4]?.image} alt="" />
         </div>
         <div className="col-span-2 row-span-6 text-white">
-             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid[5].image} alt="" />
+             <img className='w-full h-full object-cover object-top rounded-md' src={home.homePageData?.grid?.[5]?.image} alt="" />
         </div>
     </div>
   )

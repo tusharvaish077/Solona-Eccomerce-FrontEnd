@@ -6,7 +6,9 @@ const AdBanner = () => {
   const { home } = useAppSelector(store => store);
   return (
     <div className='flex flex-wrap justify-between lg:px-10'>
-      {home.homePageData?.adBanner.map((item)=><AdBannerItem item={item}/>)}
+      {home.homePageData?.adBanner?.map((item) => (
+    <AdBannerItem key={item.id} item={item} />
+))}
     </div>
   )
 }
