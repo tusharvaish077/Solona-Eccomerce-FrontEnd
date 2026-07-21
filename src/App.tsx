@@ -26,6 +26,7 @@ import Wishlist from './customer/pages/Wishlist/Wishlist';
 import { getWishlistByUserId } from './State/customer/wishlistSlice';
 import { createHomeCategories, fetchHomePageData } from './State/customer/customers/asyncThunks';
 import { homeCategories } from './data/HomeCategories';
+import HomepageManagement from './Admins/HomepageBuilder/pages/HomepageManagement';
 
 
 
@@ -85,7 +86,7 @@ function App() {
         <Route path ="/become-seller/*" element={<BecomeSeller/>}/>
         <Route path ="/seller/*" element={<SellerDashboard/>}/>
         <Route path ="/admin/*" element={<AdminDashboard/>}/>
-        
+        <Route path="/admin/homepage" element={<HomepageManagement />} />
       </Routes>
 
 
