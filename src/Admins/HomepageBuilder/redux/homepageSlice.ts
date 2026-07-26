@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { HomepageSection } from "../types/homepage";
+import { HomepageSection } from "../../../types/homepage";
 import {
     fetchHomepageSections,
     createHomepageSection,

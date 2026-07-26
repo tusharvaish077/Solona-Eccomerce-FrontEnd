@@ -27,6 +27,8 @@ import { getWishlistByUserId } from './State/customer/wishlistSlice';
 import { createHomeCategories, fetchHomePageData } from './State/customer/customers/asyncThunks';
 import { homeCategories } from './data/HomeCategories';
 import HomepageManagement from './Admins/HomepageBuilder/pages/HomepageManagement';
+import HomepageRenderer from './Home/components/HomepageRenderer';
+import HomeScreen from './Home/HomeScreen';
 
 
 
@@ -73,7 +75,8 @@ function App() {
      {/* <Account/> */}
 
       <Routes>
-        <Route path ="/" element={<Home/>}/>
+        {/* <Route path ="/" element={<Home/>}/> */}
+        <Route path ="/" element={<HomeScreen/>} />
         <Route path ="/login" element={<Auth/>}/>
         <Route path ="/products/:category" element={<Product/>}/>
         <Route path ="/reviews/:productId" element={<Review/>}/>

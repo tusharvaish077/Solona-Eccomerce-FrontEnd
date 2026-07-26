@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, CircularProgress } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 import { useAppDispatch, useAppSelector } from "../../../State/Store";
 import { fetchHomepageSections } from "../redux/homepageAsyncThunks";
+
+import HomepageSectionCard from "../components/HomepageSectionCard";
+import AddSectionDialog from "../components/dialogs/AddSectionDialog";
 
 const HomepageManagement = () => {
 
@@ -12,6 +15,8 @@ const HomepageManagement = () => {
     const { sections, loading, error } = useAppSelector(
         state => state.homepage
     );
+
+    const [openAddDialog, setOpenAddDialog] = useState(false);
 
     useEffect(() => {
 
@@ -48,6 +53,7 @@ const HomepageManagement = () => {
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
+                    onClick={() => setOpenAddDialog(true)}
                 >
                     Add Section
                 </Button>
@@ -58,45 +64,19 @@ const HomepageManagement = () => {
 
                 {sections.map(section => (
 
-                    <div
+                    <HomepageSectionCard
                         key={section.id}
-                        className="border rounded-lg p-5 shadow-sm bg-white"
-                    >
-
-                        <h2 className="text-xl font-semibold">
-
-                            {section.title}
-
-                        </h2>
-
-                        <p>
-
-                            <strong>Type:</strong>{" "}
-                            {section.sectionType}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Display Order:</strong>{" "}
-                            {section.displayOrder}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Status:</strong>{" "}
-                            {section.enabled
-                                ? "Enabled"
-                                : "Disabled"}
-
-                        </p>
-
-                    </div>
+                        section={section}
+                    />
 
                 ))}
 
             </div>
+
+            <AddSectionDialog
+                open={openAddDialog}
+                onClose={() => setOpenAddDialog(false)}
+            />
 
         </div>
 

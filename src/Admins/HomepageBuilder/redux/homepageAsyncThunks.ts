@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../config/Api";
-import { HomepageSection } from "../types/homepage";
+import { HomepageSection } from "../../../types/homepage";
 
 export const fetchHomepageSections = createAsyncThunk<
     HomepageSection[]
