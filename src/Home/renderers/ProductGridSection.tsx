@@ -1,9 +1,7 @@
 import { HomepageSection } from "../../types/homepage";
 
 interface Props {
-
     section: HomepageSection;
-
 }
 
 const ProductGridSection = ({
@@ -11,6 +9,8 @@ const ProductGridSection = ({
 }: Props) => {
 
     const config = section.config;
+
+    const products = section.products ?? [];
 
     return (
 
@@ -20,53 +20,66 @@ const ProductGridSection = ({
 
                 <h2 className="text-3xl font-bold mb-6">
 
-                    {config.title}
+                    {section.title}
 
                 </h2>
 
                 <div
                     className="grid gap-6"
                     style={{
-                        gridTemplateColumns: `repeat(${config.columns || 4}, minmax(0, 1fr))`
+                        gridTemplateColumns: `repeat(${config.columns ?? 4}, minmax(0, 1fr))`
                     }}
                 >
 
-                    {Array.from({
-                        length: config.maxProducts || 8
-                    }).map((_, index) => (
+                    {products.length > 0 ? (
 
-                        <div
-                            key={index}
-                            className="bg-white rounded-lg shadow hover:shadow-lg transition p-4"
-                        >
+                        products.map((product) => (
 
-                            <img
-                                src={`https://picsum.photos/300/300?random=${index + 50}`}
-                                alt={`Product ${index + 1}`}
-                                className="w-full h-48 object-cover rounded"
-                            />
+                            <div
+                                key={product.id}
+                                className="bg-white rounded-lg shadow hover:shadow-lg transition p-4"
+                            >
 
-                            <h3 className="mt-3 font-semibold">
+                                <img
+                                    src={
+                                        product.images?.[0] ||
+                                        "https://via.placeholder.com/300x300"
+                                    }
+                                    alt={product.title}
+                                    className="w-full h-48 object-cover rounded"
+                                />
 
-                                Product {index + 1}
+                                <h3 className="mt-3 font-semibold">
 
-                            </h3>
+                                    {product.title}
 
-                            <p className="text-gray-500 text-sm">
+                                </h3>
 
-                                {config.category}
+                                <p className="text-gray-500 text-sm">
 
-                            </p>
+                                    {product.categoryName}
 
-                            <p className="text-green-600 font-bold mt-2">
+                                </p>
 
-                                $99.99
+                                <p className="text-green-600 font-bold mt-2">
 
-                            </p>
+                                    ₹{product.sellingPrice}
+
+                                </p>
+
+                            </div>
+
+                        ))
+
+                    ) : (
+
+                        <div className="col-span-full text-center text-gray-500">
+
+                            No products available.
 
                         </div>
 
-                    ))}
+                    )}
 
                 </div>
 

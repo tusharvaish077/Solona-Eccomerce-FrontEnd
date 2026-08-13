@@ -42,14 +42,18 @@ const SellerBannerSection = ({
 
                             </p>
 
-                            <a
-                                href={config.buttonLink}
-                                className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
-                            >
+                            {config.buttonText && (
 
-                                {config.buttonText}
+                                <a
+                                    href={config.buttonUrl}
+                                    className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
+                                >
 
-                            </a>
+                                    {config.buttonText}
+
+                                </a>
+
+                            )}
 
                         </div>
 

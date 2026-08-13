@@ -33,9 +33,21 @@ const HeroBannerSection = ({
 
                 </picture>
 
-                <div className="absolute inset-0 bg-black/40 flex items-center">
+                <div
+                    className={`absolute inset-0 flex items-center ${
+                        config.overlay ? "bg-black/40" : ""
+                    }`}
+                >
 
-                    <div className="ml-10 text-white max-w-xl">
+                    <div
+                        className={`text-white max-w-xl ${
+                            config.alignment === "CENTER"
+                                ? "mx-auto text-center"
+                                : config.alignment === "RIGHT"
+                                ? "ml-auto mr-10 text-right"
+                                : "ml-10 text-left"
+                        }`}
+                    >
 
                         <h1 className="text-5xl font-bold mb-4">
 
@@ -49,14 +61,18 @@ const HeroBannerSection = ({
 
                         </p>
 
-                        <a
-                            href={config.buttonLink}
-                            className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
-                        >
+                        {config.buttonText && (
 
-                            {config.buttonText}
+                            <a
+                                href={config.buttonUrl}
+                                className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
+                            >
 
-                        </a>
+                                {config.buttonText}
+
+                            </a>
+
+                        )}
 
                     </div>
 

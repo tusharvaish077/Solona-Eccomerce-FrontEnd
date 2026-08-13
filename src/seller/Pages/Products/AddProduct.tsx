@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useEffect } from "react";
+import { fetchBrands } from "../../../Brand/redux/brandAsyncThunk";
+import { useAppSelector } from '../../../State/Store'
 import { menLevelTwo } from '../../../data/category/level two/menLevelTwo'
 import { furnitureLevelTwo } from '../../../data/category/level two/furnitureLevelTwo'
 import { womenLevelTwo } from '../../../data/category/level two/womenLevelTwo'
@@ -40,6 +43,11 @@ const AddProduct = () => {
     const [snackbarOpen, setsnackbarOpen] = useState(false);
 
     const dispatch = useAppDispatch();
+    const { brands } = useAppSelector(state => state.brand);
+
+    useEffect(() => {
+        dispatch(fetchBrands());
+    }, [dispatch]);
     const formik = useFormik({
     initialValues:{
         title:"",
@@ -52,7 +60,8 @@ const AddProduct = () => {
         category:"",
         category2:"",
         category3:"",
-        sizes:""
+        sizes:"",
+        brandId: null
     },
     onSubmit:(values)=>{
         console.log(values);
@@ -81,6 +90,7 @@ const AddProduct = () => {
         updatedImages.splice(index,1);
         formik.setFieldValue("images", updatedImages);
     }
+    
 
   return (
     <div>
@@ -238,6 +248,43 @@ const AddProduct = () => {
                 </Select>
                 {formik.touched.sizes && formik.errors.sizes && (<FormHelperText>{formik.errors.sizes}</FormHelperText>)}
                 </FormControl>
+            </Grid>
+            <Grid size={{ xs: 12, md: 4, lg: 3 }}>
+
+                <FormControl fullWidth required>
+
+                    <InputLabel id="brand-label">
+                        Brand
+                    </InputLabel>
+
+                    <Select
+                        labelId="brand-label"
+                        id="brandId"
+                        name="brandId"
+                        value={formik.values.brandId ?? ""}
+                        onChange={formik.handleChange}
+                        label="Brand"
+                    >
+
+                        <MenuItem value="">
+                            <em>Select Brand</em>
+                        </MenuItem>
+
+                        {brands.map((brand) => (
+
+                            <MenuItem
+                                key={brand.id}
+                                value={brand.id}
+                            >
+                                {brand.name}
+                            </MenuItem>
+
+                        ))}
+
+                    </Select>
+
+                </FormControl>
+
             </Grid>
             <Grid size={{xs:12, md:4, lg:4}}>
                 <FormControl

@@ -1,20 +1,36 @@
-import { TextField } from "@mui/material";
+import React from "react";
+import {
+    Grid,
+    TextField,
+    FormControlLabel,
+    Switch
+} from "@mui/material";
 
-interface Props {
+interface CategorySliderConfig {
 
-    config: any;
+    limit: number;
 
-    onChange: (config: any) => void;
+    autoScroll: boolean;
+
+    showCategoryName: boolean;
 
 }
 
-const CategorySliderEditor = ({
+interface Props {
+
+    config: CategorySliderConfig;
+
+    onChange: (config: CategorySliderConfig) => void;
+
+}
+
+const CategorySliderEditor: React.FC<Props> = ({
     config,
     onChange
-}: Props) => {
+}) => {
 
-    const handleChange = (
-        field: string,
+    const updateField = (
+        field: keyof CategorySliderConfig,
         value: any
     ) => {
 
@@ -27,31 +43,58 @@ const CategorySliderEditor = ({
 
     return (
 
-        <div className="space-y-4 mt-4">
+        <Grid container spacing={2} mt={1}>
 
-            <TextField
-                fullWidth
-                label="Section Title"
-                value={config?.title || ""}
-                onChange={(e) =>
-                    handleChange("title", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    type="number"
+                    label="Maximum Categories"
+                    value={config.limit ?? 10}
+                    onChange={(e) =>
+                        updateField(
+                            "limit",
+                            Number(e.target.value)
+                        )
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                type="number"
-                label="Maximum Categories"
-                value={config?.maxCategories || ""}
-                onChange={(e) =>
-                    handleChange(
-                        "maxCategories",
-                        Number(e.target.value)
-                    )
-                }
-            />
+            <Grid size={{ xs: 6 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.autoScroll ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "autoScroll",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Auto Scroll"
+                />
+            </Grid>
 
-        </div>
+            <Grid size={{ xs: 12 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.showCategoryName ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "showCategoryName",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Show Category Name"
+                />
+            </Grid>
+
+        </Grid>
 
     );
 

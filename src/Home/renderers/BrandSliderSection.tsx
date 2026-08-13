@@ -1,9 +1,7 @@
 import { HomepageSection } from "../../types/homepage";
 
 interface Props {
-
     section: HomepageSection;
-
 }
 
 const BrandSliderSection = ({
@@ -11,6 +9,10 @@ const BrandSliderSection = ({
 }: Props) => {
 
     const config = section.config;
+
+    const brands: string[] = config.brandIds
+        ? config.brandIds.split(",").map((b: string) => b.trim())
+        : [];
 
     return (
 
@@ -20,35 +22,44 @@ const BrandSliderSection = ({
 
                 <h2 className="text-3xl font-bold mb-6">
 
-                    {config.title}
+                    {section.title}
 
                 </h2>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
 
-                    {[
-                        "Apple",
-                        "Samsung",
-                        "Sony",
-                        "Nike",
-                        "Adidas",
-                        "Puma"
-                    ].map((brand) => (
+                    {brands.length > 0 ? (
 
-                        <div
-                            key={brand}
-                            className="border rounded-lg p-6 bg-white shadow text-center hover:shadow-lg transition"
-                        >
+                        brands.map((brand) => (
 
-                            <h3 className="font-semibold text-lg">
+                            <div
+                                key={brand}
+                                className="border rounded-lg p-6 bg-white shadow text-center hover:shadow-lg transition"
+                            >
 
-                                {brand}
+                                {config.showBrandName && (
 
-                            </h3>
+                                    <h3 className="font-semibold text-lg">
+
+                                        {brand}
+
+                                    </h3>
+
+                                )}
+
+                            </div>
+
+                        ))
+
+                    ) : (
+
+                        <div className="col-span-full text-center text-gray-500">
+
+                            No brands configured.
 
                         </div>
 
-                    ))}
+                    )}
 
                 </div>
 

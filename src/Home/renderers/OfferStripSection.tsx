@@ -12,6 +12,24 @@ const OfferStripSection = ({
 
     const config = section.config;
 
+    if (config.enabled === false) {
+        return null;
+    }
+
+    const content = (
+
+        <div className="container mx-auto text-center">
+
+            <h3 className="text-lg font-semibold">
+
+                {config.text}
+
+            </h3>
+
+        </div>
+
+    );
+
     return (
 
         <section
@@ -22,15 +40,20 @@ const OfferStripSection = ({
             }}
         >
 
-            <div className="container mx-auto text-center">
+            {config.link ? (
 
-                <h3 className="text-lg font-semibold">
+                <a
+                    href={config.link}
+                    className="block"
+                >
+                    {content}
+                </a>
 
-                    {config.text}
+            ) : (
 
-                </h3>
+                content
 
-            </div>
+            )}
 
         </section>
 

@@ -12,8 +12,10 @@ import sellerOrderSlice from "./seller/sellerOrderSlice";
 import transactionSlice from "./seller/transactionSlice";
 import adminSlice from "./admin/adminSlice";
 import homeSlice from "./customer/homeSlice";
+import brandReducer from "../Brand/redux/brandSlice";
 import dealSlice from "./admin/DealSlice";
 import homepageReducer from "../Admins/HomepageBuilder/redux/homepageSlice";
+import customerHomepageReducer from "./customer/customers/homepageSlice";
 const rootReducer = combineReducers({
     seller:sellerSlice,
     sellerProduct: sellerProductSlice,
@@ -31,7 +33,12 @@ const rootReducer = combineReducers({
     //admin
     adminSlice:adminSlice,
     deal: dealSlice,
-    homepage: homepageReducer
+    homepageAdmin: homepageReducer,
+    brand: brandReducer,
+
+    // homepage: homepageReducer
+    homepage: customerHomepageReducer,
+    
 
 });
 const store = configureStore({

@@ -1,20 +1,42 @@
-import { TextField } from "@mui/material";
+import React from "react";
+import {
+    Grid,
+    TextField,
+    FormControlLabel,
+    Switch
+} from "@mui/material";
 
-interface Props {
+interface SellerBannerConfig {
 
-    config: any;
+    image: string;
 
-    onChange: (config: any) => void;
+    heading: string;
+
+    subHeading: string;
+
+    buttonText: string;
+
+    buttonLink: string;
+
+    overlay: boolean;
 
 }
 
-const SellerBannerEditor = ({
+interface Props {
+
+    config: SellerBannerConfig;
+
+    onChange: (config: SellerBannerConfig) => void;
+
+}
+
+const SellerBannerEditor: React.FC<Props> = ({
     config,
     onChange
-}: Props) => {
+}) => {
 
-    const handleChange = (
-        field: string,
+    const updateField = (
+        field: keyof SellerBannerConfig,
         value: any
     ) => {
 
@@ -27,54 +49,81 @@ const SellerBannerEditor = ({
 
     return (
 
-        <div className="space-y-4 mt-4">
+        <Grid container spacing={2} mt={1}>
 
-            <TextField
-                fullWidth
-                label="Banner Image URL"
-                value={config?.image || ""}
-                onChange={(e) =>
-                    handleChange("image", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    fullWidth
+                    label="Banner Image URL"
+                    value={config.image ?? ""}
+                    onChange={(e) =>
+                        updateField("image", e.target.value)
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                label="Heading"
-                value={config?.heading || ""}
-                onChange={(e) =>
-                    handleChange("heading", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    fullWidth
+                    label="Heading"
+                    value={config.heading ?? ""}
+                    onChange={(e) =>
+                        updateField("heading", e.target.value)
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                label="Sub Heading"
-                value={config?.subHeading || ""}
-                onChange={(e) =>
-                    handleChange("subHeading", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    fullWidth
+                    label="Sub Heading"
+                    value={config.subHeading ?? ""}
+                    onChange={(e) =>
+                        updateField("subHeading", e.target.value)
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                label="Button Text"
-                value={config?.buttonText || ""}
-                onChange={(e) =>
-                    handleChange("buttonText", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    label="Button Text"
+                    value={config.buttonText ?? ""}
+                    onChange={(e) =>
+                        updateField("buttonText", e.target.value)
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                label="Button Link"
-                value={config?.buttonLink || ""}
-                onChange={(e) =>
-                    handleChange("buttonLink", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    label="Button Link"
+                    value={config.buttonLink ?? ""}
+                    onChange={(e) =>
+                        updateField("buttonLink", e.target.value)
+                    }
+                />
+            </Grid>
 
-        </div>
+            <Grid size={{ xs: 12 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.overlay ?? false}
+                            onChange={(e) =>
+                                updateField(
+                                    "overlay",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Dark Overlay"
+                />
+            </Grid>
+
+        </Grid>
 
     );
 

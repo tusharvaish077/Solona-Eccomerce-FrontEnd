@@ -13,7 +13,7 @@ const HomepageManagement = () => {
     const dispatch = useAppDispatch();
 
     const { sections, loading, error } = useAppSelector(
-        state => state.homepage
+        state => state.homepageAdmin
     );
 
     const [openAddDialog, setOpenAddDialog] = useState(false);

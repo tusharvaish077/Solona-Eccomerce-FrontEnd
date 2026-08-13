@@ -1,9 +1,7 @@
 import { HomepageSection } from "../../types/homepage";
 
 interface Props {
-
     section: HomepageSection;
-
 }
 
 const FlashSaleSection = ({
@@ -11,6 +9,7 @@ const FlashSaleSection = ({
 }: Props) => {
 
     const config = section.config;
+    const products = section.products || [];
 
     return (
 
@@ -22,44 +21,62 @@ const FlashSaleSection = ({
 
                     <h2 className="text-3xl font-bold text-red-600">
 
-                        {config.title}
+                        {section.title}
 
                     </h2>
 
-                    <span className="bg-red-600 text-white px-4 py-2 rounded-full">
+                    {config.showCountdown && (
 
-                        Ends in {config.durationHours} Hours
+                        <span className="bg-red-600 text-white px-4 py-2 rounded-full">
 
-                    </span>
+                            Ends in {config.durationHours ?? 24} Hours
+
+                        </span>
+
+                    )}
 
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-                    {[1, 2, 3, 4].map((item) => (
+                    {products.slice(0, config.limit ?? 8).map((product: any) => (
 
                         <div
-                            key={item}
+                            key={product.id}
                             className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition"
                         >
 
                             <img
-                                src={`https://picsum.photos/300/300?random=${item}`}
-                                alt="Flash Sale Product"
+                                src={product.images?.[0]}
+                                alt={product.title}
                                 className="w-full h-48 object-cover rounded"
                             />
 
                             <h3 className="font-semibold mt-3">
 
-                                Flash Sale Product {item}
+                                {product.title}
 
                             </h3>
 
-                            <p className="text-red-600 font-bold">
+                            <div className="flex items-center gap-2 mt-2">
 
-                                $99.99
+                                <span className="text-red-600 font-bold">
 
-                            </p>
+                                    ₹{product.sellingPrice}
+
+                                </span>
+
+                                {config.showDiscountBadge && product.discountPercent > 0 && (
+
+                                    <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+
+                                        {product.discountPercent}% OFF
+
+                                    </span>
+
+                                )}
+
+                            </div>
 
                         </div>
 

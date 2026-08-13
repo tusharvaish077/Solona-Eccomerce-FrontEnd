@@ -31,14 +31,14 @@ const CategorySliderSection = ({
 
                 <h2 className="text-3xl font-bold mb-6">
 
-                    {config.title}
+                    {section.title}
 
                 </h2>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
 
                     {categories
-                        .slice(0, config.maxCategories || categories.length)
+                        .slice(0, config.limit ?? categories.length)
                         .map(category => (
 
                             <div
@@ -50,11 +50,15 @@ const CategorySliderSection = ({
                                     📦
                                 </div>
 
-                                <h3 className="font-semibold">
+                                {config.showCategoryName && (
 
-                                    {category}
+                                    <h3 className="font-semibold">
 
-                                </h3>
+                                        {category}
+
+                                    </h3>
+
+                                )}
 
                             </div>
 

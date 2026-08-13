@@ -1,20 +1,45 @@
-import { TextField } from "@mui/material";
+import React from "react";
+import {
+    Grid,
+    TextField,
+    MenuItem,
+    FormControlLabel,
+    Switch
+} from "@mui/material";
 
-interface Props {
+interface ProductGridConfig {
 
-    config: any;
+    source: "LATEST" | "CATEGORY" | "MANUAL";
 
-    onChange: (config: any) => void;
+    categoryId?: number;
+
+    productIds?: number[];
+
+    columns: number;
+
+    limit: number;
+
+    showPrice: boolean;
+
+    showRating: boolean;
 
 }
 
-const ProductGridEditor = ({
+interface Props {
+
+    config: ProductGridConfig;
+
+    onChange: (config: ProductGridConfig) => void;
+
+}
+
+const ProductGridEditor: React.FC<Props> = ({
     config,
     onChange
-}: Props) => {
+}) => {
 
-    const handleChange = (
-        field: string,
+    const updateField = (
+        field: keyof ProductGridConfig,
         value: any
     ) => {
 
@@ -27,53 +52,130 @@ const ProductGridEditor = ({
 
     return (
 
-        <div className="space-y-4 mt-4">
+        <Grid container spacing={2} mt={1}>
 
-            <TextField
-                fullWidth
-                label="Section Title"
-                value={config?.title || ""}
-                onChange={(e) =>
-                    handleChange("title", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    select
+                    fullWidth
+                    label="Product Source"
+                    value={config.source ?? "LATEST"}
+                    onChange={(e) =>
+                        updateField("source", e.target.value)
+                    }
+                >
+                    <MenuItem value="LATEST">
+                        Latest Products
+                    </MenuItem>
 
-            <TextField
-                fullWidth
-                label="Category"
-                value={config?.category || ""}
-                onChange={(e) =>
-                    handleChange("category", e.target.value)
-                }
-            />
+                    <MenuItem value="CATEGORY">
+                        Category
+                    </MenuItem>
 
-            <TextField
-                fullWidth
-                type="number"
-                label="Number of Columns"
-                value={config?.columns || ""}
-                onChange={(e) =>
-                    handleChange(
-                        "columns",
-                        Number(e.target.value)
-                    )
-                }
-            />
+                    <MenuItem value="MANUAL">
+                        Manual Selection
+                    </MenuItem>
 
-            <TextField
-                fullWidth
-                type="number"
-                label="Maximum Products"
-                value={config?.maxProducts || ""}
-                onChange={(e) =>
-                    handleChange(
-                        "maxProducts",
-                        Number(e.target.value)
-                    )
-                }
-            />
+                </TextField>
+            </Grid>
 
-        </div>
+            {config.source === "CATEGORY" && (
+
+                <Grid size={{ xs: 12 }}>
+                    <TextField
+                        fullWidth
+                        type="number"
+                        label="Category ID"
+                        value={config.categoryId ?? ""}
+                        onChange={(e) =>
+                            updateField(
+                                "categoryId",
+                                Number(e.target.value)
+                            )
+                        }
+                    />
+                </Grid>
+
+            )}
+
+            {config.source === "MANUAL" && (
+
+                <Grid size={{ xs: 12 }}>
+                    <TextField
+                        fullWidth
+                        disabled
+                        label="Product Selection"
+                        helperText="Manual product picker coming soon"
+                    />
+                </Grid>
+
+            )}
+
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    type="number"
+                    label="Columns"
+                    value={config.columns ?? 4}
+                    onChange={(e) =>
+                        updateField(
+                            "columns",
+                            Number(e.target.value)
+                        )
+                    }
+                />
+            </Grid>
+
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    type="number"
+                    label="Products Limit"
+                    value={config.limit ?? 8}
+                    onChange={(e) =>
+                        updateField(
+                            "limit",
+                            Number(e.target.value)
+                        )
+                    }
+                />
+            </Grid>
+
+            <Grid size={{ xs: 6 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.showPrice ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "showPrice",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Show Price"
+                />
+            </Grid>
+
+            <Grid size={{ xs: 6 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.showRating ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "showRating",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Show Rating"
+                />
+            </Grid>
+
+        </Grid>
 
     );
 

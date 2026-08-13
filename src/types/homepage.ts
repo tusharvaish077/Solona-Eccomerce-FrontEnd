@@ -20,6 +20,38 @@ export enum SectionType {
     RECENTLY_VIEWED = "RECENTLY_VIEWED"
 }
 
+export interface Product {
+
+    id: number;
+
+    title: string;
+
+    description: string;
+
+    mrpPrice: number;
+
+    sellingPrice: number;
+
+    discountPercent: number;
+
+    quantity: number;
+
+    color: string;
+
+    images: string[];
+
+    categoryId: number;
+
+    categoryName: string | null;
+
+    sellerId: number;
+
+    sellerName: string;
+
+    numRatings: number;
+
+}
+
 export interface HomepageSection {
 
     id: number;
@@ -33,5 +65,7 @@ export interface HomepageSection {
     enabled: boolean;
 
     config: any;
+
+    products?: Product[];
 
 }

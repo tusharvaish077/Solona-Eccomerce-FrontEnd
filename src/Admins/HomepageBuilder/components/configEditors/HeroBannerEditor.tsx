@@ -1,5 +1,11 @@
 import React from "react";
-import { Grid, TextField, FormControlLabel, Switch } from "@mui/material";
+import {
+    Grid,
+    TextField,
+    FormControlLabel,
+    Switch,
+    MenuItem
+} from "@mui/material";
 
 interface HeroBannerConfig {
 
@@ -9,7 +15,7 @@ interface HeroBannerConfig {
 
     buttonText: string;
 
-    buttonUrl: string;
+    buttonLink: string;
 
     desktopImage: string;
 
@@ -17,7 +23,7 @@ interface HeroBannerConfig {
 
     overlay: boolean;
 
-    alignment: string;
+    alignment: "LEFT" | "CENTER" | "RIGHT";
 
 }
 
@@ -87,9 +93,9 @@ const HeroBannerEditor: React.FC<Props> = ({
                 <TextField
                     fullWidth
                     label="Button URL"
-                    value={config.buttonUrl || ""}
+                    value={config.buttonLink || ""}
                     onChange={(e) =>
-                        updateField("buttonUrl", e.target.value)
+                        updateField("buttonLink", e.target.value)
                     }
                 />
             </Grid>
@@ -118,13 +124,18 @@ const HeroBannerEditor: React.FC<Props> = ({
 
             <Grid size={{ xs: 6 }}>
                 <TextField
+                    select
                     fullWidth
                     label="Text Alignment"
-                    value={config.alignment || "LEFT"}
+                    value={config.alignment ?? "LEFT"}
                     onChange={(e) =>
                         updateField("alignment", e.target.value)
                     }
-                />
+                >
+                    <MenuItem value="LEFT">Left</MenuItem>
+                    <MenuItem value="CENTER">Center</MenuItem>
+                    <MenuItem value="RIGHT">Right</MenuItem>
+                </TextField>
             </Grid>
 
             <Grid size={{ xs: 6 }}>

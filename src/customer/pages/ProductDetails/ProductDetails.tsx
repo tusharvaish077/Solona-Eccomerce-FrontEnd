@@ -70,7 +70,7 @@ const PageDetails = () => {
                   </span>
                 </div>
 
-                <p className='text-sm'>Inclusive of all taxes. Free Shipping above ₹1499</p>
+                <p className='text-sm'>© 2026 Solona Ecommerce. All rights reserved. Designed with care.</p>
               </div>
 
               <div className='mt-7 space-y-3'>

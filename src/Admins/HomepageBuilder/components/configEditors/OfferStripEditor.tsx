@@ -1,20 +1,40 @@
-import { TextField } from "@mui/material";
+import React from "react";
+import {
+    Grid,
+    TextField,
+    FormControlLabel,
+    Switch
+} from "@mui/material";
 
-interface Props {
+interface OfferStripConfig {
 
-    config: any;
+    text: string;
 
-    onChange: (config: any) => void;
+    backgroundColor: string;
+
+    textColor: string;
+
+    link?: string;
+
+    enabled: boolean;
 
 }
 
-const OfferStripEditor = ({
+interface Props {
+
+    config: OfferStripConfig;
+
+    onChange: (config: OfferStripConfig) => void;
+
+}
+
+const OfferStripEditor: React.FC<Props> = ({
     config,
     onChange
-}: Props) => {
+}) => {
 
-    const handleChange = (
-        field: string,
+    const updateField = (
+        field: keyof OfferStripConfig,
         value: any
     ) => {
 
@@ -27,38 +47,81 @@ const OfferStripEditor = ({
 
     return (
 
-        <div className="space-y-4 mt-4">
+        <Grid container spacing={2} mt={1}>
 
-            <TextField
-                fullWidth
-                label="Offer Text"
-                value={config?.text || ""}
-                onChange={(e) =>
-                    handleChange("text", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    fullWidth
+                    label="Offer Text"
+                    value={config.text ?? ""}
+                    onChange={(e) =>
+                        updateField("text", e.target.value)
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                label="Background Color"
-                value={config?.backgroundColor || ""}
-                onChange={(e) =>
-                    handleChange("backgroundColor", e.target.value)
-                }
-                placeholder="#FF5722"
-            />
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    label="Background Color"
+                    value={config.backgroundColor ?? ""}
+                    placeholder="#FF5722"
+                    onChange={(e) =>
+                        updateField(
+                            "backgroundColor",
+                            e.target.value
+                        )
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                label="Text Color"
-                value={config?.textColor || ""}
-                onChange={(e) =>
-                    handleChange("textColor", e.target.value)
-                }
-                placeholder="#FFFFFF"
-            />
+            <Grid size={{ xs: 6 }}>
+                <TextField
+                    fullWidth
+                    label="Text Color"
+                    value={config.textColor ?? ""}
+                    placeholder="#FFFFFF"
+                    onChange={(e) =>
+                        updateField(
+                            "textColor",
+                            e.target.value
+                        )
+                    }
+                />
+            </Grid>
 
-        </div>
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    fullWidth
+                    label="Redirect URL (Optional)"
+                    value={config.link ?? ""}
+                    onChange={(e) =>
+                        updateField(
+                            "link",
+                            e.target.value
+                        )
+                    }
+                />
+            </Grid>
+
+            <Grid size={{ xs: 12 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.enabled ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "enabled",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Enable Offer Strip"
+                />
+            </Grid>
+
+        </Grid>
 
     );
 

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import HomepageRenderer from "./components/HomepageRenderer";
-import { fetchHomepageSections } from "../Admins/HomepageBuilder/redux/homepageAsyncThunks";
+// import { fetchHomepageSections } from "../Admins/HomepageBuilder/redux/homepageAsyncThunks";
+import { fetchHomepage } from "../State/customer/customers/homepageAsyncThunks";
 import { RootState, AppDispatch } from "../State/Store";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,7 +14,7 @@ const HomeScreen = () => {
     );
 
     useEffect(() => {
-        dispatch(fetchHomepageSections());
+        dispatch(fetchHomepage());
     }, [dispatch]);
 
     if (loading) {

@@ -1,20 +1,36 @@
-import { TextField } from "@mui/material";
+import React from "react";
+import {
+    Grid,
+    TextField,
+    FormControlLabel,
+    Switch
+} from "@mui/material";
 
-interface Props {
+interface RecentlyViewedConfig {
 
-    config: any;
+    limit: number;
 
-    onChange: (config: any) => void;
+    showPrice: boolean;
+
+    showRating: boolean;
 
 }
 
-const RecentlyViewedEditor = ({
+interface Props {
+
+    config: RecentlyViewedConfig;
+
+    onChange: (config: RecentlyViewedConfig) => void;
+
+}
+
+const RecentlyViewedEditor: React.FC<Props> = ({
     config,
     onChange
-}: Props) => {
+}) => {
 
-    const handleChange = (
-        field: string,
+    const updateField = (
+        field: keyof RecentlyViewedConfig,
         value: any
     ) => {
 
@@ -27,31 +43,58 @@ const RecentlyViewedEditor = ({
 
     return (
 
-        <div className="space-y-4 mt-4">
+        <Grid container spacing={2} mt={1}>
 
-            <TextField
-                fullWidth
-                label="Section Title"
-                value={config?.title || ""}
-                onChange={(e) =>
-                    handleChange("title", e.target.value)
-                }
-            />
+            <Grid size={{ xs: 12 }}>
+                <TextField
+                    fullWidth
+                    type="number"
+                    label="Maximum Products"
+                    value={config.limit ?? 10}
+                    onChange={(e) =>
+                        updateField(
+                            "limit",
+                            Number(e.target.value)
+                        )
+                    }
+                />
+            </Grid>
 
-            <TextField
-                fullWidth
-                type="number"
-                label="Maximum Products"
-                value={config?.maxProducts || ""}
-                onChange={(e) =>
-                    handleChange(
-                        "maxProducts",
-                        Number(e.target.value)
-                    )
-                }
-            />
+            <Grid size={{ xs: 6 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.showPrice ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "showPrice",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Show Price"
+                />
+            </Grid>
 
-        </div>
+            <Grid size={{ xs: 6 }}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={config.showRating ?? true}
+                            onChange={(e) =>
+                                updateField(
+                                    "showRating",
+                                    e.target.checked
+                                )
+                            }
+                        />
+                    }
+                    label="Show Rating"
+                />
+            </Grid>
+
+        </Grid>
 
     );
 
