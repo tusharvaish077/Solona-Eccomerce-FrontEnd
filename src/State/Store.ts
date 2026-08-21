@@ -16,6 +16,7 @@ import brandReducer from "../Brand/redux/brandSlice";
 import dealSlice from "./admin/DealSlice";
 import homepageReducer from "../Admins/HomepageBuilder/redux/homepageSlice";
 import customerHomepageReducer from "./customer/customers/homepageSlice";
+import categoryReducer from "../Admins/Catalog/redux/categorySlice";
 const rootReducer = combineReducers({
     seller:sellerSlice,
     sellerProduct: sellerProductSlice,
@@ -39,7 +40,7 @@ const rootReducer = combineReducers({
     // homepage: homepageReducer
     homepage: customerHomepageReducer,
     
-
+    category: categoryReducer
 });
 const store = configureStore({
   reducer: rootReducer,

@@ -4,7 +4,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './Theme/theme';
 // @ts-ignore: CSS module declarations are not available in this TS config
 import './App.css';
-import Navbar from './customer/components/Navbar/Navbar';
+// import Navbar from './customer/components/Navbar/Navbar';
+import Navbar from './customer/components/NavbarNew/Navbar';
+import BrandManagement from "./Brand/BrandManagement";
 import Home from './customer/pages/Home/Home';
 import Product from './customer/pages/Product/Product';
 import ProductDetails from './customer/pages/ProductDetails/ProductDetails';
@@ -29,6 +31,7 @@ import { homeCategories } from './data/HomeCategories';
 import HomepageManagement from './Admins/HomepageBuilder/pages/HomepageManagement';
 import HomepageRenderer from './Home/components/HomepageRenderer';
 import HomeScreen from './Home/HomeScreen';
+import CategoryManagement from './Admins/Catalog/Categories/CategoryManagement';
 
 
 
@@ -90,6 +93,8 @@ function App() {
         <Route path ="/seller/*" element={<SellerDashboard/>}/>
         <Route path ="/admin/*" element={<AdminDashboard/>}/>
         <Route path="/admin/homepage" element={<HomepageManagement />} />
+        <Route path="/admin/categories" element={<CategoryManagement />}/>
+        <Route path="/admin/brands" element={<BrandManagement />} />
       </Routes>
 
 
