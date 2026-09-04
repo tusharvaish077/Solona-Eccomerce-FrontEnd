@@ -41,6 +41,7 @@ export const fetchCategories = createAsyncThunk<Category[], string | null>(
                 "/api/admin/categories",
                 getAuthConfig(jwt)
             );
+            console.log("Fetched categories:", response.data);
             return response.data;
         } catch (error: any) {
             return rejectWithValue(
@@ -58,6 +59,7 @@ export const fetchRootCategories = createAsyncThunk<Category[], string | null>(
                 "/api/admin/categories/root",
                 getAuthConfig(jwt)
             );
+            console.log("Fetched root categories:", response.data); 
             return response.data;
         } catch (error: any) {
             return rejectWithValue(
@@ -78,6 +80,7 @@ export const fetchChildCategories = createAsyncThunk<
                 `/api/admin/categories/${parentId}/children`,
                 getAuthConfig(jwt)
             );
+            console.log(`Fetched child categories for parentId ${parentId}:`, response.data);
             return response.data;
         } catch (error: any) {
             return rejectWithValue(

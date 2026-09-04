@@ -19,6 +19,8 @@ import { sizes } from '../../../data/Filter/sizes'
 import { mainCategory } from '../../../data/category/mainCategory'
 import { useAppDispatch } from '../../../State/Store'
 import { createProduct } from '../../../State/seller/sellerProductSlice'
+import { fetchCategories } from '../../../Admins/Catalog/redux/categoryAsyncThunks';
+
 
 const categoryTwo: {[key:string]:any[]} = {
     men:menLevelTwo,
@@ -43,10 +45,14 @@ const AddProduct = () => {
     const [snackbarOpen, setsnackbarOpen] = useState(false);
 
     const dispatch = useAppDispatch();
+    const { categories } = useAppSelector(
+        state => state.category
+    );
     const { brands } = useAppSelector(state => state.brand);
 
     useEffect(() => {
         dispatch(fetchBrands());
+         dispatch(fetchCategories(localStorage.getItem("jwt") || ""));
     }, [dispatch]);
     const formik = useFormik({
     initialValues:{
@@ -63,10 +69,49 @@ const AddProduct = () => {
         sizes:"",
         brandId: null
     },
-    onSubmit:(values)=>{
-        console.log(values);
-        dispatch(createProduct({request:values,jwt:localStorage.getItem("jwt")}));
-    }
+    onSubmit: (values) => {
+
+    // const request = {
+    //     title: values.title,
+    //     description: values.description,
+
+    //     mrpPrice: Number(values.mrpPrice),
+    //     sellingPrice: Number(values.sellingPrice),
+    //     quantity: Number(values.quantity || 0),
+
+    //     color: values.color,
+    //     images: values.images,
+
+    //     categoryId: Number(values.category3),
+
+    //     sizes: values.sizes,
+
+    //     brandId: Number(values.brandId)
+    // };
+    const request = {
+    title: values.title,
+    description: values.description,
+    mrpPrice: values.mrpPrice,
+    sellingPrice: values.sellingPrice,
+    quantity: values.quantity,
+    color: values.color,
+    images: values.images,
+    sizes: values.sizes,
+
+    categoryId: Number(values.category3),
+
+    brandId: Number(values.brandId)
+};
+
+    console.log("REQUEST => ", request);
+
+    dispatch(
+        createProduct({
+            request,
+            jwt: localStorage.getItem("jwt")
+        })
+    );
+}
 });
     
     const childCategory =(category:any, parentCategoryId:any)=>{
@@ -90,7 +135,19 @@ const AddProduct = () => {
         updatedImages.splice(index,1);
         formik.setFieldValue("images", updatedImages);
     }
-    
+    const rootCategories = categories.filter(
+        category => category.parentId === null
+    );
+
+    const level2Categories = categories.filter(
+        category =>
+            category.parentId === Number(formik.values.category)
+    );
+
+    const level3Categories = categories.filter(
+        category =>
+            category.parentId === Number(formik.values.category2)
+    );
 
   return (
     <div>
@@ -287,67 +344,71 @@ const AddProduct = () => {
 
             </Grid>
             <Grid size={{xs:12, md:4, lg:4}}>
-                <FormControl
-                fullWidth
-                error={formik.touched.category && Boolean(formik.errors.category)}
-                required >
-                <InputLabel id='category-label'>Category</InputLabel>
-                <Select
-                    labelId='category-label'
-                    id='category'
-                    name='category'
-                    value={formik.values.category}
-                    onChange={formik.handleChange}
-                    label="Category">
-                        
-                        {mainCategory.map((item)=><MenuItem value={item.categoryId}>
-                            <p>{item.name}</p>
-                        </MenuItem>)}
-                </Select>
-                {formik.touched.category && formik.errors.category && (<FormHelperText>{formik.errors.category}</FormHelperText>)}
+                <FormControl fullWidth>
+                    <InputLabel>Main Category</InputLabel>
+
+                    <Select
+                        name="category"
+                        value={formik.values.category}
+                        onChange={(e) => {
+                            formik.setFieldValue("category", e.target.value);
+                            formik.setFieldValue("category2", "");
+                            formik.setFieldValue("category3", "");
+                        }}
+                    >
+                        {rootCategories.map(category => (
+                            <MenuItem
+                                key={category.id}
+                                value={category.id}
+                            >
+                                {category.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
                 </FormControl>
             </Grid>
             <Grid size={{xs:12, md:4, lg:4}}>
-                <FormControl
-                fullWidth
-                error={formik.touched.category && Boolean(formik.errors.category)}
-                required >
-                <InputLabel id='category2-label'>Second Category</InputLabel>
-                <Select
-                    labelId='category2-label'
-                    id='category2'
-                    name='category2'
-                    value={formik.values.category2}
-                    onChange={formik.handleChange}
-                    label="Second Category">
-                        
-                        {formik.values.category && categoryTwo[formik.values.category]?.map((item)=><MenuItem value={item.categoryId}>
-                            {item.name}
-                        </MenuItem>)}
-                </Select>
-                {formik.touched.category && formik.errors.category && (<FormHelperText>{formik.errors.category}</FormHelperText>)}
+                <FormControl fullWidth>
+                    <InputLabel>Sub Category</InputLabel>
+
+                    <Select
+                        name="category2"
+                        value={formik.values.category2}
+                        onChange={(e) => {
+                            formik.setFieldValue("category2", e.target.value);
+                            formik.setFieldValue("category3", "");
+                        }}
+                    >
+                        {level2Categories.map(category => (
+                            <MenuItem
+                                key={category.id}
+                                value={category.id}
+                            >
+                                {category.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
                 </FormControl>
             </Grid>
             <Grid size={{xs:12, md:4, lg:4}}>
-                <FormControl
-                fullWidth
-                error={formik.touched.category && Boolean(formik.errors.category)}
-                required >
-                <InputLabel id='category3-label'>Third Category</InputLabel>
+               <FormControl fullWidth>
+                <InputLabel>Child Category</InputLabel>
+
                 <Select
-                    labelId='category3-label'
-                    id='category3'
-                    name='category3'
+                    name="category3"
                     value={formik.values.category3}
                     onChange={formik.handleChange}
-                    label="Third Category">
-                        
-                        {formik.values.category2 && childCategory(categoryThree[formik.values.category],formik.values.category2)?.map((item:any)=><MenuItem value={item.categoryId}>
-                            {item.name}
-                        </MenuItem>)}
+                >
+                    {level3Categories.map(category => (
+                        <MenuItem
+                            key={category.id}
+                            value={category.id}
+                        >
+                            {category.name}
+                        </MenuItem>
+                    ))}
                 </Select>
-                {formik.touched.category && formik.errors.category && (<FormHelperText>{formik.errors.category}</FormHelperText>)}
-                </FormControl>
+            </FormControl>
             </Grid>
             <Grid size={{xs:12}}>
                 <Button sx={{p:"14px"}}

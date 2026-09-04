@@ -15,7 +15,7 @@ export const fetchBrands = createAsyncThunk<Brand[]>(
         try {
 
             const response = await api.get("/api/brands");
-
+            console.log("Fetched brands:", response.data);
             return response.data;
 
         } catch (error: any) {
